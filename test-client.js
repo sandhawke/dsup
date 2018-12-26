@@ -1,5 +1,4 @@
 const Client = require('./client')
-const delay = require('delay')
 
 async function main () {
   const client = new Client('http://localhost:8080/time1000.json')

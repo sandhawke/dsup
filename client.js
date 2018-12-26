@@ -4,14 +4,14 @@ const AbortController = require('abort-controller')
 const EventEmitter = require('eventemitter3')
 const WatchableSet = require('./watchable-set')
 const fetch = require('node-fetch')
-const delay = require('delay')
-const stream = require('stream')
 const jsonlines = require('./jsonlines')
+const url = require('url')
+const EventSource = require('eventsource')
 
 const linkrel = 'https://sandhawke.github.io/dsup'
 
 class Client extends EventEmitter {
-  constructor (url, options = {format: jsonlines}) {
+  constructor (url, options = { format: jsonlines }) {
     super()
     this.url = url
     Object.assign(this, options)
@@ -27,15 +27,17 @@ class Client extends EventEmitter {
     debug('res: %O', res)
     debug('headers: %O', res.headers)
     const linkHeader = res.headers.get('link')
-    if (false && linkHeader) {
+    if (linkHeader) {
       const links = LinkHeader.parse(linkHeader)
       if (links.has('rel', linkrel)) {
-        const streamURL = links.get('rel', linkrel)
-        debug('%o', {streamURL})
+        const relURL = links.get('rel', linkrel)[0].uri
+        debug({relURL, base: this.url})
+        const streamURL = url.resolve(this.url, relURL)
+        debug('%o', { streamURL })
         debug('KEYS %o', Object.keys(res))
         debug('closing')
         this.controller.abort()
-        this.stream()
+        this.stream(streamURL)
         return
       }
     } else {
@@ -51,22 +53,45 @@ class Client extends EventEmitter {
       const diff = this.diff(this.data, buff)
       for (const item of diff.add) this.data.add(item)
       for (const item of diff.remove) this.data.delete(item)
-      
+
       // better start polling...
-      setTimeout(() => {this.start()}, 100)
+      setTimeout(() => { this.start() }, 100)
     })
     res.body.pipe(parser)
 
-
     res.body.on('data', text => {
-      // buffer up the text until a newline, 
+      // buffer up the text until a newline,
     })
   }
 
   stream (url) {
     debug('stream from', url)
+    const source = new EventSource(url)
+    source.on('add', event => {
+      console.log('msg=add %o', event)
+      for (const item of this.format.parse(event.data)) {
+        this.data.add(item)
+      }
+    })
+    source.on('remove', event => {
+      console.log('msg=remove %o', event)
+      for (const item of this.format.parse(event.data)) {
+        const obj = this.data.getMatch(item, this.format.stringify)
+        if (obj) { 
+          this.data.delete(obj)
+        } else {
+          throw Error('deleting thing not found: ' + JSON.stringify(event))
+        }
+      }
+      // NO, we need to use the serialization!
+      // I guess WatchableSet needs to be SerializedWatchableSet ?
+      //    -- but kb can handle this, actually
+      //    -- deleteMatching == uses deep equal, or serialization
+      // this.data.delete(item)
+    })
+    source.on('remove-all', () => this.data.clear())
   }
-  
+
   close () {
     // ...
   }
@@ -85,7 +110,7 @@ class Client extends EventEmitter {
    * be close to linear time.
    */
   diff (from, to) {
-    const add = new Set
+    const add = new Set()
     const remove = new Set()
     const fmap = this.keyMap(from)
     const tmap = this.keyMap(to)
@@ -95,7 +120,7 @@ class Client extends EventEmitter {
     for (const [key, val] of tmap.entries()) {
       if (!fmap.has(key)) add.add(val)
     }
-    return {add, remove}
+    return { add, remove }
   }
 }
 
