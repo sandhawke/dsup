@@ -68,13 +68,13 @@ class Client extends EventEmitter {
     debug('stream from', url)
     const source = new EventSource(url)
     source.on('add', event => {
-      console.log('msg=add %o', event)
+      debug('msg=add %o', event)
       for (const item of this.format.parse(event.data)) {
         this.data.add(item)
       }
     })
     source.on('remove', event => {
-      console.log('msg=remove %o', event)
+      debug('msg=remove %o', event)
       for (const item of this.format.parse(event.data)) {
         const obj = this.data.getMatch(item, this.format.stringify)
         if (obj) { 
