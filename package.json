@@ -1,0 +1,37 @@
+{
+  "name": "dsup",
+  "version": "0.0.0",
+  "description": "Client and server for the dataset update protocol",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx standard && npx tap --cov test*.js test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandhawke/dsup.git"
+  },
+  "keywords": [
+    "sandhawke"
+  ],
+  "author": "Sandro Hawke (http://hawke.org/sandro)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sandhawke/dsup/issues"
+  },
+  "homepage": "https://github.com/sandhawke/dsup#readme",
+  "devDependencies": {
+    "tape": "^4.9.1"
+  },
+  "dependencies": {
+    "abort-controller": "^2.0.0",
+    "appmgr": "^1.0.0",
+    "debug": "^4.1.0",
+    "delay": "^4.1.0",
+    "eventemitter3": "^3.1.0",
+    "got": "^9.5.0",
+    "http-link-header": "^1.0.2",
+    "jsonlines": "^0.1.1",
+    "node-fetch": "^2.3.0",
+    "parse-link-header": "^1.0.1"
+  }
+}
