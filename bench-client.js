@@ -7,11 +7,12 @@ let sum = 0
 let count = 0
 
 async function main () {
-  const client = new Client('http://localhost:8080/time-1.json')
+  const client = new Client('http://127.0.0.1:8080/time-0.json')
   client.data.on('add', item => {
     debug('added %o, now d=%o', item, [...client.data])
     if (item.count !== count) {
-      console.log('adjusting count from %d to %d', count, item.count)
+      console.log('skipping', item.count - count)
+      // console.log('adjusting count from %d to %d', count, item.count)
       count = item.count
     }
     count++
@@ -35,9 +36,11 @@ async function stat () {
     const now = new Date()
     const loopTime = now - start
     start = now
-    console.log(`${Math.round(1000*adds/loopTime)} adds/sec, lag=${Math.round(sum/adds/1000)/1000}ms, count=${count}`)
+    console.log(`${Math.round(1000*adds/loopTime)} adds/sec, t=${loopTime}ms lag=${Math.round(sum/adds/1000)/1000}ms, count=${count}`)
     adds = 0
     sum = 0
+    // be slow!
+    // for (let x = 0; x < 10000000000; x++) { }
   }
 }
 

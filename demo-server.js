@@ -1,6 +1,8 @@
 const dsup = require('./server')
 const delay = require('delay')
 
+let zcounter = 0
+
 const run = async () => {
   const server = new dsup.Server()
   await server.start()
@@ -15,7 +17,7 @@ curl ${server.siteurl}/time-1.json.dsup
   timer(100)
   timer(10)
   timer(1)
-  // timer(0)
+  timer(0)
 
   async function timer(ms) {
     const set = server.addResource(`/time-${ms}.json`, JSON)
@@ -40,8 +42,10 @@ curl ${server.siteurl}/time-1.json.dsup
     let timeObj
     function loop () {
       if (timeObj) set.delete(timeObj)
+      const now = (new Date()).toISOString()
+      // if (ms === 1000) console.log(now)
       timeObj = {
-        time: (new Date()).toISOString(),
+        time: now,
         hrtime: process.hrtime.bigint().toString(),
         count: count++
       }
@@ -49,11 +53,18 @@ curl ${server.siteurl}/time-1.json.dsup
       if (ms) {
         setTimeout(loop, ms)
       } else {
+        zcounter = count
         setImmediate(loop)
       }
     }
     loop()
   }
 }
+
+let oz=0
+setInterval(() => {
+  console.log('zcounter=%d, timer-0 counting %s/s', zcounter, zcounter-oz)
+  oz = zcounter
+}, 1000)
 
 run()

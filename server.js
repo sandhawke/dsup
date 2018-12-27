@@ -4,9 +4,9 @@ const LinkHeader = require('http-link-header')
 const delay = require('delay')
 const WatchableSet = require('./watchable-set')
 const jsonlines = require('./jsonlines')
+const handleStream = require('./stream')
 
 const linkrel = 'https://sandhawke.github.io/dsup'
-let streamNumbers = 0
 
 class Server {
   constructor (options) {
@@ -44,56 +44,28 @@ class Server {
     const set = options.data || new WatchableSet()
     const streamURL = url + '.dsup'
     this.m.app.get(streamURL, (req, res) => {
-      let onClose = []
-      const rememberToRemove = (event, f) => {
-        onClose.push(() => { set.removeListener(event, f) })
-      }
-      const streamNumber = ++streamNumbers
-      debug('stream open %d', streamNumber)
-      req.on('close', () => {
-        debug('stream CLOSED by client %d', streamNumber)
-        onClose.forEach(x => x())
-      })
-      res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache'
-      })
-      let f
-
-      f = () => {
-        debug('during clear, stream %d', streamNumber)
-        res.write('event: remove-all\n\n')
-      }
-      set.on('clear', f)
-      rememberToRemove('clear', f)
-      f()
-      
-      f = item => {
-        debug('during add %o, stream %d', item, streamNumber)
-        res.write('event: add\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
-      }
-      set.on('add', f)
-      rememberToRemove('add', f)
-      for (const i of set) f(i)
-                   
-      f = item => {
-        debug('during remove %o, stream %d', item, streamNumber)
-        const out = res.write('event: remove\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
-        debug('.. write returned', out)
-      }
-      set.on('delete', f)
-      rememberToRemove('delete', f)                  
+      handleStream(set, format, req, res)
     })
-    this.m.app.get(url, (req, res) => {
+    const sendHead = (res) => {
       var links = new LinkHeader()
       links.set({ rel: linkrel, uri: streamURL })
       res.set('Link', links)
       res.writeHead(200)
+    }
+    this.m.app.head(url, (req, res) => {
+      sendHead(res)
+      res.end()
+    })
+    this.m.app.get(url, (req, res) => {
+      sendHead(res)
+
+      // dump the dataset
       const stringifier = new format.Stringifier()
       stringifier.pipe(res)
       for (const i of set) stringifier.write(i)
       stringifier.end()
     })
+    // patch, someday  :-)
     return set
   }
 }

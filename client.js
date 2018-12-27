@@ -6,7 +6,7 @@ const WatchableSet = require('./watchable-set')
 const fetch = require('node-fetch')
 const jsonlines = require('./jsonlines')
 const url = require('url')
-const EventSource = require('eventsource')
+const EventSource = require('./eventsource')  // MINE
 
 const linkrel = 'https://sandhawke.github.io/dsup'
 
@@ -80,7 +80,7 @@ class Client extends EventEmitter {
         if (obj) { 
           this.data.delete(obj)
         } else {
-          throw Error('deleting thing not found: ' + JSON.stringify(event))
+          console.error('WARNING2: deleting thing not found: ' + JSON.stringify(event))
         }
       }
       // NO, we need to use the serialization!
