@@ -17,7 +17,7 @@ curl ${server.siteurl}/time-1.json.dsup
   timer(100)
   timer(10)
   timer(1)
-  timer(0)
+  // timer(0)
 
   async function timer(ms) {
     const set = server.addResource(`/time-${ms}.json`, JSON)

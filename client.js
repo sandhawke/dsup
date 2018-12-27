@@ -22,11 +22,31 @@ class Client extends EventEmitter {
   async start () {
     this.controller = new AbortController()
     debug('fetching')
-    const res = await fetch(this.url, { signal: this.controller.signal })
-    debug('.. resolved')
-    debug('res: %O', res)
-    debug('headers: %O', res.headers)
-    const linkHeader = res.headers.get('link')
+    if (typeof window === 'undefined') {
+      const res = await fetch(this.url, { signal: this.controller.signal })
+      debug('.. resolved')
+      debug('res: %O', res)
+      debug('headers: %O', res.headers)
+      const linkHeader = res.headers.get('link')
+      this.withResponse(res, linkHeader)
+    } else {
+      var req = new XMLHttpRequest();
+      req.open('head', this.url)
+      req.setRequestHeader('Access-Control-Allow-Headers', 'Link')
+      const that = this
+      req.onload = function () {
+        const res = this
+        debug('.. resolved')
+        debug('res: %O', res)
+        debug('headers: %O', res.getAllResponseHeaders())
+        const linkHeader = res.getResponseHeader('link')
+        that.withResponse(this, linkHeader)
+      }
+      req.send()
+    }
+  }
+
+  withResponse (res, linkHeader) {
     if (linkHeader) {
       const links = LinkHeader.parse(linkHeader)
       if (links.has('rel', linkrel)) {

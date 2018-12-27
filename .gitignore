@@ -3,3 +3,5 @@ OLD
 .nyc*
 node_modules
 out-*
+isolate-*.log
+process.txt

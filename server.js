@@ -5,6 +5,7 @@ const delay = require('delay')
 const WatchableSet = require('./watchable-set')
 const jsonlines = require('./jsonlines')
 const handleStream = require('./stream')
+var cors = require('cors')
 
 const linkrel = 'https://sandhawke.github.io/dsup'
 
@@ -13,6 +14,17 @@ class Server {
     this.m = appmgr.create(options)
     Object.assign(this, options)
 
+    const corsHandler = cors({
+      exposedHeaders: 'Link',
+      allowedHeaders: 'Link'
+    })
+    this.m.app.use(corsHandler)
+    this.m.app.options('/', corsHandler)
+
+    this.m.app.get('/', (req, res) => {
+      res.send('<html><body>Try <a href="static/demo">demo</a>')
+    })
+    
     // just for testing...
     this.m.app.get('/wait', async (req, res) => {
       const streamURL = 'foo'
@@ -44,12 +56,21 @@ class Server {
     const set = options.data || new WatchableSet()
     const streamURL = url + '.dsup'
     this.m.app.get(streamURL, (req, res) => {
+      setCors(res)
       handleStream(set, format, req, res)
     })
+    const setCors = (res) => {
+      return
+      res.set('Access-Control-Allow-Origin', '*')
+      res.set('Access-Control-Allow-Credentials', 'true')
+      res.set('Access-Control-Allow-Headers', 'Link')
+      res.set('Access-Control-Expose-Headers', 'Link')
+    }
     const sendHead = (res) => {
       var links = new LinkHeader()
       links.set({ rel: linkrel, uri: streamURL })
       res.set('Link', links)
+      setCors(res)
       res.writeHead(200)
     }
     this.m.app.head(url, (req, res) => {
