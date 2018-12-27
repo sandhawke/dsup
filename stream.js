@@ -21,9 +21,9 @@ const handleStream = (dataset, format, req, res) => {
   // to changes on this dataset
   req.on('close', () => {
     debug('stream CLOSED by client %d', streamNumber)
-    dataset.removeListener('add', onAdd)
-    dataset.removeListener('delete', onDelete)
-    dataset.removeListener('clear', onClear)
+    dataset.off('add', onAdd)
+    dataset.off('delete', onDelete)
+    dataset.off('clear', onClear)
   })
 
   // Very simple header.  Could also link back to full-content resource?
@@ -37,13 +37,15 @@ const handleStream = (dataset, format, req, res) => {
   let flowing = true
   let smart = true
 
+  let id = () => ''
+  
   const onClear = () => {
     debug('during clear, stream %d', streamNumber)
     // go ahead and push this through even if not flowing; I think
     // that makes more sense than trying to queue this somehow.
     addQ.clear()
     deleteQ.clear()
-    flowing = res.write('event: remove-all\n\n')
+    flowing = res.write(id() + 'event: remove-all\n\n')
   }
   dataset.on('clear', onClear)
   
@@ -51,7 +53,7 @@ const handleStream = (dataset, format, req, res) => {
     debug('during add %o, stream %d', item, streamNumber)
     if (flowing) {
       if (!dataset.has(item)) console.error('onAdd sees we DO NOT have item')
-      flowing = res.write('event: add\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
+      flowing = res.write(id() + 'event: add\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
     } else {
       if (smart) {
         const wasInDeleteQ = deleteQ.delete(item)
@@ -67,7 +69,7 @@ const handleStream = (dataset, format, req, res) => {
     debug('during remove %o, stream %d', item, streamNumber)
     if (flowing) {
       if (dataset.has(item)) console.error('onDelete sees we have item')
-      flowing = res.write('event: remove\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
+      flowing = res.write(id() + 'event: remove\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
       // res.socket.bufferSize is the same thing
       // if (res.socket.writableLength > 107) console.log('hw=%o, len=%o', res.socket.writableHighWaterMark, res.socket.writableLength)
     } else {
@@ -107,9 +109,19 @@ const handleStream = (dataset, format, req, res) => {
   })
 
   // Start off with no knowledge of the client's version, so we need
-  // to wipe it.  At some point, we'll add communicating the version.
+  // to wipe it.
+  //
+  // don't send ids on these, because the dataset.etag wont reflect
+  // the partial state.   
   onClear()
   for (const i of dataset) onAdd(i)
+
+  // okay, now we can set etags as ids
+  id = () => {
+    let etag = dataset.etag
+    if (etag) return 'id: ' + etag + '\n'
+    return ''
+  }
 }
 
 module.exports = handleStream

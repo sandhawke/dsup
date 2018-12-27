@@ -17,6 +17,8 @@ class WatchableSet extends EventEmitter {
     if (init) {
       for (const i of init) this.data.add(i)
     }
+    this.id32xor = 0
+    this.changeCounter = 0
   }
 
   // So painful.  But otherwise we need to keep a map from all the
@@ -37,24 +39,46 @@ class WatchableSet extends EventEmitter {
   }
   
   get length () { return 0 }
-  get size () { return this.data.size() }
+  get size () { return this.data.size }
 
   add (value) {
     this.data.add(value)
+    if (value._id32) {
+      this.id32xor = this.id32xor ^ value._id32
+    }
+    this.changeCounter++
     this.emit('add', value)
     return this
   }
 
   clear () {
     this.data.clear()
+    this.id32xor = 0
+    this.changeCounter = 0
+    // console.log('*** cleared, about to emit, this=%o, etag=%o', this, this.etag)
     this.emit('clear')
     return this
   }
 
   delete (value) {
     this.data.delete(value)
+    if (value._id32) {
+      this.id32xor = this.id32xor ^ value._id32
+    }
+    this.changeCounter++
     this.emit('delete', value)
     return this
+  }
+
+  // purely advisory and opaque except for testing
+  get etag () {
+    const parts = []
+    // doesn't work because the client doesn't need/want to know all
+    // the changes that got skipped before sending
+    // parts.push(`count=${this.changeCounter}`)
+    parts.push(`size=${this.size}`)
+    parts.push(`id32xor=${this.id32xor}`)
+    return parts.join(';')
   }
 
   entries () {

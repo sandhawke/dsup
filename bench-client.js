@@ -7,7 +7,7 @@ let sum = 0
 let count = 0
 
 async function main () {
-  const client = new Client('http://127.0.0.1:8080/time-10.json')
+  const client = new Client('http://127.0.0.1:8080/time-0.json')
   client.data.on('add', item => {
     debug('added %o, now d=%o', item, [...client.data])
     if (item.count !== count) {

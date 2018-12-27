@@ -17,7 +17,7 @@ curl ${server.siteurl}/time-1.json.dsup
   timer(100)
   timer(10)
   timer(1)
-  // timer(0)
+  timer(0) // start this at some URL then redirect; shut off after a while?
 
   async function timer(ms) {
     const set = server.addResource(`/time-${ms}.json`, JSON)
@@ -47,7 +47,9 @@ curl ${server.siteurl}/time-1.json.dsup
       timeObj = {
         time: now,
         hrtime: process.hrtime.bigint().toString(),
-        count: count++
+        count: count++,
+        _id32: randomInt32()
+
       }
       set.add(timeObj)
       if (ms) {
@@ -59,6 +61,10 @@ curl ${server.siteurl}/time-1.json.dsup
     }
     loop()
   }
+}
+
+function randomInt32 () {
+  return Math.round(Math.random() * 0xffffffff) + (1 << 31)
 }
 
 let oz=0

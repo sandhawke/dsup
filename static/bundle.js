@@ -8221,7 +8221,7 @@ let sum = 0
 let count = 0
 
 async function main () {
-  const client = new Client('http://127.0.0.1:8080/time-10.json')
+  const client = new Client('http://127.0.0.1:8080/time-0.json')
   client.data.on('add', item => {
     debug('added %o, now d=%o', item, [...client.data])
     if (item.count !== count) {
@@ -8275,7 +8275,13 @@ const WatchableSet = require('./watchable-set')
 const fetch = require('node-fetch')
 const jsonlines = require('./jsonlines')
 const url = require('url')
-const EventSource = require('./eventsource')  // MINE
+let EventSource
+if (typeof window === 'undefined') {
+  EventSource = require('./eventsource')  // MINE, not the npm package
+} else {
+  EventSource = window.EventSource
+}
+
 
 const linkrel = 'https://sandhawke.github.io/dsup'
 
@@ -8353,21 +8359,35 @@ class Client extends EventEmitter {
     })
   }
 
+  idCheck (event) {
+    if (event.id) {
+      if (event.id !== this.data.etag) {
+        console.error({event, etag: this.data.etag})
+        throw Error('mismatch between event.id and dataset.etag')
+      }
+      debug('wow, event id matches!', event.id)
+    }
+  }
+  
   stream (url) {
-    debug('stream from', url)
+    debug('Calling EventSource on', url)
+    console.log('Calling EventSource on', url)
     const source = new EventSource(url)
-    source.on('add', event => {
+    this.source = source
+    source.addEventListener('add', event => {
       debug('msg=add %o', event)
       for (const item of this.format.parse(event.data)) {
         this.data.add(item)
+        this.idCheck(event)
       }
     })
-    source.on('remove', event => {
+    source.addEventListener('remove', event => {
       debug('msg=remove %o', event)
       for (const item of this.format.parse(event.data)) {
         const obj = this.data.getMatch(item, this.format.stringify)
         if (obj) { 
           this.data.delete(obj)
+          this.idCheck(event)
         } else {
           console.error('WARNING2: deleting thing not found: ' + JSON.stringify(event))
         }
@@ -8378,7 +8398,10 @@ class Client extends EventEmitter {
       //    -- deleteMatching == uses deep equal, or serialization
       // this.data.delete(item)
     })
-    source.on('remove-all', () => this.data.clear())
+    source.addEventListener('remove-all', event => {
+      this.data.clear()
+      this.idCheck(event)
+    })
   }
 
   close () {
@@ -8435,6 +8458,7 @@ const {parse} = require('url')
 
 class EventSource extends EventEmitter {
   constructor (url, eventSourceInitDict) {
+    console.log('Using Sandro\'s custom-hack EventSource()')
     super()
 
     this.event = {}
@@ -8451,6 +8475,7 @@ class EventSource extends EventEmitter {
 
     debug('http.request %o', options)
     const req = hModule.request(options, res => {
+      this.response = res
       debug('http.request callback running, status = %o', res.statusCode)
       if (res.statusCode !== 200) {
         console.error('error', {status: res.statusCode, message: res.statusMessage})
@@ -8504,6 +8529,9 @@ class EventSource extends EventEmitter {
     this.event = {}
     this.data = []
   }
+
+  // to match browser EventSource
+  addEventListener (...args) { return this.on(...args) }
 }
 
 module.exports = EventSource
@@ -11174,6 +11202,8 @@ class WatchableSet extends EventEmitter {
     if (init) {
       for (const i of init) this.data.add(i)
     }
+    this.id32xor = 0
+    this.changeCounter = 0
   }
 
   // So painful.  But otherwise we need to keep a map from all the
@@ -11194,24 +11224,46 @@ class WatchableSet extends EventEmitter {
   }
   
   get length () { return 0 }
-  get size () { return this.data.size() }
+  get size () { return this.data.size }
 
   add (value) {
     this.data.add(value)
+    if (value._id32) {
+      this.id32xor = this.id32xor ^ value._id32
+    }
+    this.changeCounter++
     this.emit('add', value)
     return this
   }
 
   clear () {
     this.data.clear()
+    this.id32xor = 0
+    this.changeCounter = 0
+    // console.log('*** cleared, about to emit, this=%o, etag=%o', this, this.etag)
     this.emit('clear')
     return this
   }
 
   delete (value) {
     this.data.delete(value)
+    if (value._id32) {
+      this.id32xor = this.id32xor ^ value._id32
+    }
+    this.changeCounter++
     this.emit('delete', value)
     return this
+  }
+
+  // purely advisory and opaque except for testing
+  get etag () {
+    const parts = []
+    // doesn't work because the client doesn't need/want to know all
+    // the changes that got skipped before sending
+    // parts.push(`count=${this.changeCounter}`)
+    parts.push(`size=${this.size}`)
+    parts.push(`id32xor=${this.id32xor}`)
+    return parts.join(';')
   }
 
   entries () {

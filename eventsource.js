@@ -15,6 +15,7 @@ const {parse} = require('url')
 
 class EventSource extends EventEmitter {
   constructor (url, eventSourceInitDict) {
+    console.log('Using Sandro\'s custom-hack EventSource()')
     super()
 
     this.event = {}
@@ -31,6 +32,7 @@ class EventSource extends EventEmitter {
 
     debug('http.request %o', options)
     const req = hModule.request(options, res => {
+      this.response = res
       debug('http.request callback running, status = %o', res.statusCode)
       if (res.statusCode !== 200) {
         console.error('error', {status: res.statusCode, message: res.statusMessage})
@@ -84,6 +86,9 @@ class EventSource extends EventEmitter {
     this.event = {}
     this.data = []
   }
+
+  // to match browser EventSource
+  addEventListener (...args) { return this.on(...args) }
 }
 
 module.exports = EventSource
