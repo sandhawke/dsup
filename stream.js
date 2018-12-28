@@ -8,8 +8,8 @@ const handleStream = ({dataset, stringify}, req, res) => {
 
   // Obviously we're messing with internals, but I don't know a proper
   // way to lower the highwatermark on a socket created by
-  // http.Server, and we want it low, because we can buffer MUCH
-  // better.
+  // http.Server, and we want it low, so we can use SmartPatch to cut
+  // out unnecessary traffic
   // console.log('res.socket %O', res.socket)
   if (res.socket._writableState.highWaterMark) {
     res.socket._writableState.highWaterMark = 1024
@@ -17,114 +17,80 @@ const handleStream = ({dataset, stringify}, req, res) => {
     throw Error('res._writableState.highWaterMark missing -- library version issue?')
   }
 
-  // When the clien closes the connection, we need to stop listening
+  // When the client closes the connection, we need to stop listening
   // to changes on this dataset
   req.on('close', () => {
     debug('stream CLOSED by client %d', streamNumber)
     dataset.off('change', onChange)
   })
 
-  // Very simple header.  Could also link back to full-content resource?
+  // Very simple header.  Could also link back to dataset resource?
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache'
   })
-  
-  const addQ = dataset.emptyClone()
-  const deleteQ = dataset.emptyClone()
+
+  let pending = dataset.smartPatch()
   let flowing = true
-  let smart = true
-
-  let id = () => ''
-
-  const onClear = () => {
-    debug('during clear, stream %d', streamNumber)
-    // go ahead and push this through even if not flowing; I think
-    // that makes more sense than trying to queue this somehow.
-    addQ.clear()
-    deleteQ.clear()
-    flowing = res.write(id() + 'event: remove-all\n\n')
-  }
-  
-  const onAdd = item => {
-    debug('during add %o, stream %d', item, streamNumber)
-    if (flowing) {
-      if (!dataset.has(item)) console.error('onAdd sees we DO NOT have item')
-      flowing = res.write(id() + 'event: add\ndata: ' + stringify(item).replace('\n', '\ndata: ') + '\n\n')
-    } else {
-      if (smart) {
-        const wasInDeleteQ = deleteQ.delete(item)
-        if (!wasInDeleteQ) addQ.add(item)
-      } else {
-        addQ.add(item)
-      }
-    }
-  }
-  
-  const onDelete = key => {
-    debug('during remove %o, stream %d', key, streamNumber)
-    if (flowing) {
-      // if (dataset.has(item)) console.error('onDelete sees we have item')
-      flowing = res.write(id() + 'event: remove\ndata: ' +
-                          key.replace('\n', '\ndata: ') +
-                          '\n\n')
-      // res.socket.bufferSize is the same thing
-      // if (res.socket.writableLength > 107) console.log('hw=%o, len=%o', res.socket.writableHighWaterMark, res.socket.writableLength)
-    } else {
-      if (smart) {
-        const wasInAddQ = addQ.deleteKey(key)
-        if (!wasInAddQ) deleteQ.add(key)
-      } else {
-        deleteQ.add(key)
-      }
-    }
-  }
+  let id
 
   const onChange = event => {
-    if (event.type === 'clear') {
-      onClear()
-    } else if (event.type === 'add') {
-      onAdd(event.item)
-    } else if (event.type === 'delete') {
-      onDelete(event.key)
+    if (!flowing) {
+      pending.push(event)
+      return
     }
+    const out = []
+    if (id) out.push(id())
+    
+    let type = event.type
+    let text
+    if (event.type === 'clear') {
+      type = 'remove-all'
+    } else if (event.type === 'add') {
+      text = stringify(event.item)
+    } else if (event.type === 'delete') {
+      type = 'remove'
+      text = stringify(event.key)
+    }
+
+    out.push('event: ' + type)
+    if (text) {
+      for (const line of text.split('\n')) {
+        out.push('data: ' + line)
+      }
+    }
+    out.push('')
+    flowing = res.write(out.join('\n'))
   }
   dataset.on('change', onChange)
-
-
 
   // If we got back-pressure during a res.write, and flowing was set
   // to false, we're supposed to get a 'drain' event as soon as it's
   // good to send again.
-  res.on('drain', () => {
+  const onDrain = () => {
     // process.stdout.write('.')
-    console.log('Draining with ', {deleteQ:[...deleteQ.values()],
-                                   addQ:[...addQ.values()]})
+    console.log('Draining with ', pending)
     flowing = true
-    
-    const flush = (q, func) => {
-      while (flowing) {
-        // pick any value from the queue
-        let {value, done} = q.values().next()
-        if (done) break
-        // remove it from the queue and try again to send it
-        q.delete(value)
-        func(value)
-      }
+    while (flowing) {
+      const ev = pending.shift()
+      if (!ev) break
+      onChange(ev)
     }
+  }
+  res.on('drain', onDrain)
 
-    flush(deleteQ, onDelete)
-    flush(addQ, onAdd)
+  // Okay, now we need to catch up the client to our current state
+  
+  // until we are able to learn the actual clientState via etag
+  // or Last-Event-Id or something
+  const clientState = dataset.cloneEmpty()
+  pending.push({ type: 'clear' })
+  
+  const diff = clientState.diff(dataset)
+  pending.push(...diff)
 
-  })
-
-  // Start off with no knowledge of the client's version, so we need
-  // to wipe it.
-  //
-  // don't send ids on these, because the dataset.etag wont reflect
-  // the partial state.   
-  onClear()
-  for (const i of dataset) onAdd(i)
+  // we weren't really blocked, we were just using pending for this buffering
+  onDrain()
 
   // okay, now we can set etags as ids
   id = () => {
