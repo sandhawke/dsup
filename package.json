@@ -1,6 +1,6 @@
 {
   "name": "webdup",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Client and server for the dataset update protocol",
   "main": "index.js",
   "scripts": {
