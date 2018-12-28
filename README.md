@@ -75,5 +75,5 @@ arrays.  Or path2, etag2, etc.  Or JSON.stringified array of {path,
 etag}.  So Link: <...>; rel=.../webdup-service
 That'd be a nice thing anyway, one stream per origin (per user).
 
-[npm-image]: https://img.shields.io/npm/v/dsup.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/dsup
+[npm-image]: https://img.shields.io/npm/v/webdup.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/webdup
