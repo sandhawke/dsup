@@ -1,5 +1,5 @@
 {
-  "name": "dsup",
+  "name": "webdup",
   "version": "0.0.0",
   "description": "Client and server for the dataset update protocol",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sandhawke/dsup.git"
+    "url": "git+https://github.com/sandhawke/webdup.git"
   },
   "keywords": [
     "sandhawke"
@@ -16,9 +16,9 @@
   "author": "Sandro Hawke (http://hawke.org/sandro)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sandhawke/dsup/issues"
+    "url": "https://github.com/sandhawke/webdup/issues"
   },
-  "homepage": "https://github.com/sandhawke/dsup#readme",
+  "homepage": "https://github.com/sandhawke/webdup#readme",
   "devDependencies": {
     "tape": "^4.9.1"
   },
