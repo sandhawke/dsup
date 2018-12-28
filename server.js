@@ -2,7 +2,7 @@ const debug = require('debug')(__filename.split('/').slice(-1).join())
 const appmgr = require('appmgr')
 const LinkHeader = require('http-link-header')
 const delay = require('delay')
-const WatchableSet = require('./watchable-set')
+const KeyedSet = require('keyed-set')
 const jsonlines = require('./jsonlines')
 const handleStream = require('./stream')
 var cors = require('cors')
@@ -53,7 +53,10 @@ class Server {
   addResource (url, options = {}) {
     const format = options.format || jsonlines
     debug('format = %o', format)
-    const set = options.data || new WatchableSet()
+    const set = options.dataset || new KeyedSet()
+    const stringify = options.dataset.stringify ||
+          options.stringify ||
+          JSON.stringify
     const streamURL = url + '.dsup'
     this.m.app.get(streamURL, (req, res) => {
       setCors(res)
@@ -70,6 +73,7 @@ class Server {
       var links = new LinkHeader()
       links.set({ rel: linkrel, uri: streamURL })
       res.set('Link', links)
+      if (set.etag) res.set('ETag', set.etag)
       setCors(res)
       res.writeHead(200)
     }
@@ -80,11 +84,15 @@ class Server {
     this.m.app.get(url, (req, res) => {
       sendHead(res)
 
-      // dump the dataset
+      res.write(stringify([...set]))
+      res.write('\n')
+      res.end()
+      /*
       const stringifier = new format.Stringifier()
       stringifier.pipe(res)
       for (const i of set) stringifier.write(i)
       stringifier.end()
+      */
     })
     // patch, someday  :-)
     return set

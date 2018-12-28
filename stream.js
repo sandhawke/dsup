@@ -21,9 +21,7 @@ const handleStream = (dataset, format, req, res) => {
   // to changes on this dataset
   req.on('close', () => {
     debug('stream CLOSED by client %d', streamNumber)
-    dataset.off('add', onAdd)
-    dataset.off('delete', onDelete)
-    dataset.off('clear', onClear)
+    dataset.off('change', onChange)
   })
 
   // Very simple header.  Could also link back to full-content resource?
@@ -32,13 +30,13 @@ const handleStream = (dataset, format, req, res) => {
     'Cache-Control': 'no-cache'
   })
   
-  const addQ = new Set()
-  const deleteQ = new Set()
+  const addQ = dataset.emptyClone()
+  const deleteQ = dataset.emptyClone()
   let flowing = true
   let smart = true
 
   let id = () => ''
-  
+
   const onClear = () => {
     debug('during clear, stream %d', streamNumber)
     // go ahead and push this through even if not flowing; I think
@@ -47,7 +45,6 @@ const handleStream = (dataset, format, req, res) => {
     deleteQ.clear()
     flowing = res.write(id() + 'event: remove-all\n\n')
   }
-  dataset.on('clear', onClear)
   
   const onAdd = item => {
     debug('during add %o, stream %d', item, streamNumber)
@@ -63,25 +60,38 @@ const handleStream = (dataset, format, req, res) => {
       }
     }
   }
-  dataset.on('add', onAdd)
   
-  const onDelete = item => {
-    debug('during remove %o, stream %d', item, streamNumber)
+  const onDelete = key => {
+    debug('during remove %o, stream %d', key, streamNumber)
     if (flowing) {
-      if (dataset.has(item)) console.error('onDelete sees we have item')
-      flowing = res.write(id() + 'event: remove\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
+      // if (dataset.has(item)) console.error('onDelete sees we have item')
+      flowing = res.write(id() + 'event: remove\ndata: ' +
+                          key.replace('\n', '\ndata: ') +
+                          '\n\n')
       // res.socket.bufferSize is the same thing
       // if (res.socket.writableLength > 107) console.log('hw=%o, len=%o', res.socket.writableHighWaterMark, res.socket.writableLength)
     } else {
       if (smart) {
-        const wasInAddQ = addQ.delete(item)
-        if (!wasInAddQ) deleteQ.add(item)
+        const wasInAddQ = addQ.deleteKey(key)
+        if (!wasInAddQ) deleteQ.add(key)
       } else {
-        deleteQ.add(item)
+        deleteQ.add(key)
       }
     }
   }
-  dataset.on('delete', onDelete)
+
+  const onChange = event => {
+    if (event.type === 'clear') {
+      onClear()
+    } else if (event.type === 'add') {
+      onAdd(event.item)
+    } else if (event.type === 'delete') {
+      onDelete(event.key)
+    }
+  }
+  dataset.on('change', onChange)
+
+
 
   // If we got back-pressure during a res.write, and flowing was set
   // to false, we're supposed to get a 'drain' event as soon as it's

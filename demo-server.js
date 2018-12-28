@@ -1,5 +1,6 @@
 const dsup = require('./server')
 const delay = require('delay')
+const Demoset = require('./demoset')
 
 let zcounter = 0
 
@@ -17,27 +18,15 @@ curl ${server.siteurl}/time-1.json.dsup
   timer(100)
   timer(10)
   timer(1)
-  timer(0) // start this at some URL then redirect; shut off after a while?
+  // timer(0) // start this at some URL then redirect; shut off after a while?
 
   async function timer(ms) {
-    const set = server.addResource(`/time-${ms}.json`, JSON)
-    set.add({ hello: `This is a timer resource, updating every %{ms}ms.` })
+    const set = server.addResource(`/time-${ms}.json`, {
+      dataset: new Demoset()
+    })
+    set.add({ hello: `This is a timer resource, updating every ${ms}ms.`,
+              _id32: 0x12345678 + (1 << 31)})
     let count = 0
-
-    /*
-    while (true) {
-      const timeObj = {
-        time: (new Date()).toISOString(),
-        hrtime: process.hrtime.bigint().toString(),
-        count: count++
-      }
-      set.add(timeObj)
-      if (ms) {
-        await delay(ms)
-      } // else ... inf loop?
-      set.delete(timeObj)
-    }
-    */
 
     let timeObj
     function loop () {
@@ -69,7 +58,7 @@ function randomInt32 () {
 
 let oz=0
 setInterval(() => {
-  console.log('zcounter=%d, timer-0 counting %s/s', zcounter, zcounter-oz)
+  // console.log('zcounter=%d, timer-0 counting %s/s', zcounter, zcounter-oz)
   oz = zcounter
 }, 1000)
 
