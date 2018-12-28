@@ -1,15 +1,13 @@
-# webdup
+# webdup.js - web dataset update protocol
 [![NPM version][npm-image]][npm-url]
 
-Client and server libraries for the dataset update protocol
-
-Status: planned
+Status: in progress
 
 ## The Dataset API
 
 Inside both the client and server, application code interacts with
 webdup code mostly by each of them modifying and listening for
-modifications to "dataset" objects.
+modifications to one or more "dataset" objects.
 
 By default, we create datasets as instances of
 [KeyedSet](https://github.com/sandhawke/keyed-set#readme), but you're
