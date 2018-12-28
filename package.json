@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sandhawke/webdup.git"
+    "url": "git+https://github.com/sandhawke/webdup.js.git"
   },
   "keywords": [
     "sandhawke"
@@ -16,9 +16,9 @@
   "author": "Sandro Hawke (http://hawke.org/sandro)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sandhawke/webdup/issues"
+    "url": "https://github.com/sandhawke/webdup.js/issues"
   },
-  "homepage": "https://github.com/sandhawke/webdup#readme",
+  "homepage": "https://github.com/sandhawke/webdup.js#readme",
   "devDependencies": {
     "tape": "^4.9.1"
   },
