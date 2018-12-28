@@ -1,12 +1,14 @@
-const dsup = require('./server')
+const startServer = require('./start-server')
 const delay = require('delay')
 const Demoset = require('./demoset')
+const attach = require('./attach')
 
 let zcounter = 0
 
 const run = async () => {
-  const server = new dsup.Server()
-  await server.start()
+  const server = await startServer()
+  console.log('server.siteurl: %o', server.siteurl)
+
   console.log(`Try:
 curl -v ${server.siteurl}/time-1000.json
 curl ${server.siteurl}/time-1000.json.dsup
@@ -18,10 +20,11 @@ curl ${server.siteurl}/time-1.json.dsup
   timer(100)
   timer(10)
   timer(1)
-  // timer(0) // start this at some URL then redirect; shut off after a while?
+  timer(0) // start this at some URL then redirect; shut off after a while?
 
   async function timer(ms) {
-    const set = server.addResource(`/time-${ms}.json`, {
+    console.log('on timer %o using server %o', ms, server.siteurl)
+    const set = attach(server.app, `/time-${ms}.json`, {
       dataset: new Demoset()
     })
     set.add({ hello: `This is a timer resource, updating every ${ms}ms.`,
@@ -58,7 +61,9 @@ function randomInt32 () {
 
 let oz=0
 setInterval(() => {
-  // console.log('zcounter=%d, timer-0 counting %s/s', zcounter, zcounter-oz)
+  if (zcounter > 0) {
+    console.log('counter=%d, timer-0 counting %s/s', zcounter, zcounter-oz)
+  }
   oz = zcounter
 }, 1000)
 

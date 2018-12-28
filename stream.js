@@ -1,7 +1,7 @@
 const debug = require('debug')(__filename.split('/').slice(-1).join())
 let streamNumbers = 0
 
-const handleStream = (dataset, format, req, res) => {
+const handleStream = ({dataset, stringify}, req, res) => {
   const streamNumber = ++streamNumbers
   debug('stream open %d', streamNumber)
   console.log('stream open %d', streamNumber)
@@ -50,7 +50,7 @@ const handleStream = (dataset, format, req, res) => {
     debug('during add %o, stream %d', item, streamNumber)
     if (flowing) {
       if (!dataset.has(item)) console.error('onAdd sees we DO NOT have item')
-      flowing = res.write(id() + 'event: add\ndata: ' + format.stringify(item).replace('\n', '\ndata: ') + '\n\n')
+      flowing = res.write(id() + 'event: add\ndata: ' + stringify(item).replace('\n', '\ndata: ') + '\n\n')
     } else {
       if (smart) {
         const wasInDeleteQ = deleteQ.delete(item)
