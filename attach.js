@@ -33,6 +33,7 @@ function attach (app, path, options) {
     }
     res.set('Link', links)
     if (dataset.etag) res.set('ETag', dataset.etag)
+    // send a Last-Modified date, too
     doCORS(req, res)
     res.writeHead(200)
   }

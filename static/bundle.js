@@ -2667,7 +2667,7 @@ function validateParams (params) {
   return params
 }
 
-},{"http":34,"url":40}],8:[function(require,module,exports){
+},{"http":29,"url":35}],8:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -3759,9 +3759,6 @@ exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
 },{"./decode":15,"./encode":16}],18:[function(require,module,exports){
-module.exports = require('./lib/_stream_duplex.js');
-
-},{"./lib/_stream_duplex.js":19}],19:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3893,7 +3890,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":21,"./_stream_writable":23,"core-util-is":5,"inherits":9,"process-nextick-args":12}],20:[function(require,module,exports){
+},{"./_stream_readable":20,"./_stream_writable":22,"core-util-is":5,"inherits":9,"process-nextick-args":12}],19:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3941,7 +3938,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":22,"core-util-is":5,"inherits":9}],21:[function(require,module,exports){
+},{"./_stream_transform":21,"core-util-is":5,"inherits":9}],20:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4963,7 +4960,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":19,"./internal/streams/BufferList":24,"./internal/streams/destroy":25,"./internal/streams/stream":26,"_process":13,"core-util-is":5,"events":6,"inherits":9,"isarray":11,"process-nextick-args":12,"safe-buffer":32,"string_decoder/":27,"util":2}],22:[function(require,module,exports){
+},{"./_stream_duplex":18,"./internal/streams/BufferList":23,"./internal/streams/destroy":24,"./internal/streams/stream":25,"_process":13,"core-util-is":5,"events":6,"inherits":9,"isarray":11,"process-nextick-args":12,"safe-buffer":28,"string_decoder/":26,"util":2}],21:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5178,7 +5175,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":19,"core-util-is":5,"inherits":9}],23:[function(require,module,exports){
+},{"./_stream_duplex":18,"core-util-is":5,"inherits":9}],22:[function(require,module,exports){
 (function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5868,7 +5865,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"./_stream_duplex":19,"./internal/streams/destroy":25,"./internal/streams/stream":26,"_process":13,"core-util-is":5,"inherits":9,"process-nextick-args":12,"safe-buffer":32,"timers":38,"util-deprecate":42}],24:[function(require,module,exports){
+},{"./_stream_duplex":18,"./internal/streams/destroy":24,"./internal/streams/stream":25,"_process":13,"core-util-is":5,"inherits":9,"process-nextick-args":12,"safe-buffer":28,"timers":33,"util-deprecate":37}],23:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5948,7 +5945,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":32,"util":2}],25:[function(require,module,exports){
+},{"safe-buffer":28,"util":2}],24:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -6023,10 +6020,10 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":12}],26:[function(require,module,exports){
+},{"process-nextick-args":12}],25:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":6}],27:[function(require,module,exports){
+},{"events":6}],26:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6323,10 +6320,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":32}],28:[function(require,module,exports){
-module.exports = require('./readable').PassThrough
-
-},{"./readable":29}],29:[function(require,module,exports){
+},{"safe-buffer":28}],27:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -6335,13 +6329,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":19,"./lib/_stream_passthrough.js":20,"./lib/_stream_readable.js":21,"./lib/_stream_transform.js":22,"./lib/_stream_writable.js":23}],30:[function(require,module,exports){
-module.exports = require('./readable').Transform
-
-},{"./readable":29}],31:[function(require,module,exports){
-module.exports = require('./lib/_stream_writable.js');
-
-},{"./lib/_stream_writable.js":23}],32:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":18,"./lib/_stream_passthrough.js":19,"./lib/_stream_readable.js":20,"./lib/_stream_transform.js":21,"./lib/_stream_writable.js":22}],28:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -6405,136 +6393,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":3}],33:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-module.exports = Stream;
-
-var EE = require('events').EventEmitter;
-var inherits = require('inherits');
-
-inherits(Stream, EE);
-Stream.Readable = require('readable-stream/readable.js');
-Stream.Writable = require('readable-stream/writable.js');
-Stream.Duplex = require('readable-stream/duplex.js');
-Stream.Transform = require('readable-stream/transform.js');
-Stream.PassThrough = require('readable-stream/passthrough.js');
-
-// Backwards-compat with node 0.4.x
-Stream.Stream = Stream;
-
-
-
-// old-style streams.  Note that the pipe method (the only relevant
-// part of this class) is overridden in the Readable class.
-
-function Stream() {
-  EE.call(this);
-}
-
-Stream.prototype.pipe = function(dest, options) {
-  var source = this;
-
-  function ondata(chunk) {
-    if (dest.writable) {
-      if (false === dest.write(chunk) && source.pause) {
-        source.pause();
-      }
-    }
-  }
-
-  source.on('data', ondata);
-
-  function ondrain() {
-    if (source.readable && source.resume) {
-      source.resume();
-    }
-  }
-
-  dest.on('drain', ondrain);
-
-  // If the 'end' option is not supplied, dest.end() will be called when
-  // source gets the 'end' or 'close' events.  Only dest.end() once.
-  if (!dest._isStdio && (!options || options.end !== false)) {
-    source.on('end', onend);
-    source.on('close', onclose);
-  }
-
-  var didOnEnd = false;
-  function onend() {
-    if (didOnEnd) return;
-    didOnEnd = true;
-
-    dest.end();
-  }
-
-
-  function onclose() {
-    if (didOnEnd) return;
-    didOnEnd = true;
-
-    if (typeof dest.destroy === 'function') dest.destroy();
-  }
-
-  // don't leave dangling pipes when there are errors.
-  function onerror(er) {
-    cleanup();
-    if (EE.listenerCount(this, 'error') === 0) {
-      throw er; // Unhandled stream error in pipe.
-    }
-  }
-
-  source.on('error', onerror);
-  dest.on('error', onerror);
-
-  // remove all the event listeners that were added.
-  function cleanup() {
-    source.removeListener('data', ondata);
-    dest.removeListener('drain', ondrain);
-
-    source.removeListener('end', onend);
-    source.removeListener('close', onclose);
-
-    source.removeListener('error', onerror);
-    dest.removeListener('error', onerror);
-
-    source.removeListener('end', cleanup);
-    source.removeListener('close', cleanup);
-
-    dest.removeListener('close', cleanup);
-  }
-
-  source.on('end', cleanup);
-  source.on('close', cleanup);
-
-  dest.on('close', cleanup);
-
-  dest.emit('pipe', source);
-
-  // Allow for unix-like usage: A.pipe(B).pipe(C)
-  return dest;
-};
-
-},{"events":6,"inherits":9,"readable-stream/duplex.js":18,"readable-stream/passthrough.js":28,"readable-stream/readable.js":29,"readable-stream/transform.js":30,"readable-stream/writable.js":31}],34:[function(require,module,exports){
+},{"buffer":3}],29:[function(require,module,exports){
 (function (global){
 var ClientRequest = require('./lib/request')
 var response = require('./lib/response')
@@ -6622,7 +6481,7 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":36,"./lib/response":37,"builtin-status-codes":4,"url":40,"xtend":43}],35:[function(require,module,exports){
+},{"./lib/request":31,"./lib/response":32,"builtin-status-codes":4,"url":35,"xtend":38}],30:[function(require,module,exports){
 (function (global){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
 
@@ -6699,7 +6558,7 @@ function isFunction (value) {
 xhr = null // Help gc
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],36:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -7030,7 +6889,7 @@ var unsafeHeaders = [
 ]
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":35,"./response":37,"_process":13,"buffer":3,"inherits":9,"readable-stream":29,"to-arraybuffer":39}],37:[function(require,module,exports){
+},{"./capability":30,"./response":32,"_process":13,"buffer":3,"inherits":9,"readable-stream":27,"to-arraybuffer":34}],32:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -7258,7 +7117,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":35,"_process":13,"buffer":3,"inherits":9,"readable-stream":29}],38:[function(require,module,exports){
+},{"./capability":30,"_process":13,"buffer":3,"inherits":9,"readable-stream":27}],33:[function(require,module,exports){
 (function (setImmediate,clearImmediate){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -7337,7 +7196,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":13,"timers":38}],39:[function(require,module,exports){
+},{"process/browser.js":13,"timers":33}],34:[function(require,module,exports){
 var Buffer = require('buffer').Buffer
 
 module.exports = function (buf) {
@@ -7366,7 +7225,7 @@ module.exports = function (buf) {
 	}
 }
 
-},{"buffer":3}],40:[function(require,module,exports){
+},{"buffer":3}],35:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8100,7 +7959,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":41,"punycode":14,"querystring":17}],41:[function(require,module,exports){
+},{"./util":36,"punycode":14,"querystring":17}],36:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -8118,7 +7977,7 @@ module.exports = {
   }
 };
 
-},{}],42:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (global){
 
 /**
@@ -8189,7 +8048,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],43:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -8210,7 +8069,7 @@ function extend() {
     return target
 }
 
-},{}],44:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (__filename){
 const debug = require('debug')(__filename.split('/').slice(-1).join())
 const Client = require('./client')
@@ -8222,8 +8081,10 @@ let count = 0
 
 async function main () {
   const client = new Client('http://127.0.0.1:8080/time-0.json')
-  client.data.on('add', item => {
-    debug('added %o, now d=%o', item, [...client.data])
+  client.dataset.on('change', ev => {
+    let {type, item} = ev
+    if (type !== 'add') return
+    debug('added %o, now d=%o', item, [...client.dataset])
     if (item.count !== count) {
       console.log('skipping', item.count - count)
       // console.log('adjusting count from %d to %d', count, item.count)
@@ -8265,16 +8126,18 @@ stat()
 main()
 
 }).call(this,"/bench-client.js")
-},{"./client":45,"debug":49,"delay":51}],45:[function(require,module,exports){
+},{"./client":40,"debug":68,"delay":70}],40:[function(require,module,exports){
 (function (__filename){
 const debug = require('debug')(__filename.split('/').slice(-1).join())
+//const request = require('./request')  // MINE
+const axios = require('axios')
 const LinkHeader = require('http-link-header')
-const AbortController = require('abort-controller')
 const EventEmitter = require('eventemitter3')
-const WatchableSet = require('./watchable-set')
-const fetch = require('node-fetch')
-const jsonlines = require('./jsonlines')
-const url = require('url')
+const KeyedSet = require('keyed-set')
+const URL = require('url')
+const linkrels = require('./linkrel')
+const delay = require('delay')
+
 let EventSource
 if (typeof window === 'undefined') {
   EventSource = require('./eventsource')  // MINE, not the npm package
@@ -8282,64 +8145,38 @@ if (typeof window === 'undefined') {
   EventSource = window.EventSource
 }
 
-
 const linkrel = 'https://sandhawke.github.io/dsup'
 
 class Client extends EventEmitter {
-  constructor (url, options = { format: jsonlines }) {
+  constructor (url, options) {
     super()
     this.url = url
     Object.assign(this, options)
-    if (!this.data) this.data = new WatchableSet()
+    if (!this.dataset) this.dataset = new KeyedSet()
     this.start()
   }
 
   async start () {
-    this.controller = new AbortController()
     debug('fetching')
-    if (typeof window === 'undefined') {
-      const res = await fetch(this.url, { signal: this.controller.signal })
-      debug('.. resolved')
-      debug('res: %O', res)
-      debug('headers: %O', res.headers)
-      const linkHeader = res.headers.get('link')
-      this.withResponse(res, linkHeader)
-    } else {
-      var req = new XMLHttpRequest();
-      req.open('head', this.url)
-      req.setRequestHeader('Access-Control-Allow-Headers', 'Link')
-      const that = this
-      req.onload = function () {
-        const res = this
-        debug('.. resolved')
-        debug('res: %O', res)
-        debug('headers: %O', res.getAllResponseHeaders())
-        const linkHeader = res.getResponseHeader('link')
-        that.withResponse(this, linkHeader)
-      }
-      req.send()
-    }
-  }
+    const res = await axios.get(this.url, { responseType: 'text' })   // stream?
+    this.streamURL = this.findStreamURL(res.headers.link)
+    console.log('etag', res.headers.etag)
+    console.log('last-modified', res.headers['last-modified'])
 
-  withResponse (res, linkHeader) {
-    if (linkHeader) {
-      const links = LinkHeader.parse(linkHeader)
-      if (links.has('rel', linkrel)) {
-        const relURL = links.get('rel', linkrel)[0].uri
-        debug({relURL, base: this.url})
-        const streamURL = url.resolve(this.url, relURL)
-        debug('%o', { streamURL })
-        debug('KEYS %o', Object.keys(res))
-        debug('closing')
-        this.controller.abort()
-        this.stream(streamURL)
-        return
-      }
-    } else {
-      debug('no link header')
-    }
+    // console.log(typeof res.data, res.data)
+    const recd = new KeyedSet(res.data)
+    const diff = this.dataset.diff(recd)
+    this.dataset.changeAll(diff) // rename to patch?
 
-    debug('reading body')
+    if (this.streamURL) {
+      this.stream(this.streamURL)
+    } else {
+      console.log('no webdup link, will have to poll')
+      await delay(1)
+      this.start()
+    }
+    
+    /*
     const parser = new this.format.Parser()
     const buff = new Set()
     parser.on('data', item => buff.add(item))
@@ -8352,17 +8189,14 @@ class Client extends EventEmitter {
       // better start polling...
       setTimeout(() => { this.start() }, 100)
     })
-    res.body.pipe(parser)
-
-    res.body.on('data', text => {
-      // buffer up the text until a newline,
-    })
+    res.data.pipe(parser)
+    */
   }
 
   idCheck (event) {
-    if (event.id) {
-      if (event.id !== this.data.etag) {
-        console.error({event, etag: this.data.etag})
+    if (event.id && this.dataset.etag) {
+      if (event.id !== this.dataset.etag) {
+        console.error({event, etag: this.dataset.etag})
         throw Error('mismatch between event.id and dataset.etag')
       }
       debug('wow, event id matches!', event.id)
@@ -8370,76 +8204,55 @@ class Client extends EventEmitter {
   }
   
   stream (url) {
-    debug('Calling EventSource on', url)
+    // query parms
+    
     console.log('Calling EventSource on', url)
     const source = new EventSource(url)
     this.source = source
     source.addEventListener('add', event => {
       debug('msg=add %o', event)
-      for (const item of this.format.parse(event.data)) {
-        this.data.add(item)
+      for (const item of JSON.parse(event.data)) {
+        this.dataset.add(item)
         this.idCheck(event)
       }
     })
     source.addEventListener('remove', event => {
       debug('msg=remove %o', event)
-      for (const item of this.format.parse(event.data)) {
-        const obj = this.data.getMatch(item, this.format.stringify)
-        if (obj) { 
-          this.data.delete(obj)
-          this.idCheck(event)
-        } else {
-          console.error('WARNING2: deleting thing not found: ' + JSON.stringify(event))
-        }
+      for (const key of JSON.parse(event.data)) {
+        this.dataset.deleteKey(key)
+        this.idCheck(event)
       }
-      // NO, we need to use the serialization!
-      // I guess WatchableSet needs to be SerializedWatchableSet ?
-      //    -- but kb can handle this, actually
-      //    -- deleteMatching == uses deep equal, or serialization
-      // this.data.delete(item)
     })
     source.addEventListener('remove-all', event => {
-      this.data.clear()
+      this.dataset.clear()
       this.idCheck(event)
     })
   }
-
+  
   close () {
     // ...
   }
 
-  keyMap (s) {
-    const out = new Map()
-    for (const item of s) {
-      out.set(this.format.stringify(item), item)
+  findStreamURL (linkHeader) {
+    if (linkHeader) {
+      const links = LinkHeader.parse(linkHeader)
+      for (const linkrel of linkrels.lookFor) {
+        if (links.has('rel', linkrel)) {
+          const relURL = links.get('rel', linkrel)[0].uri
+          debug({relURL, base: this.url})
+          const result = URL.resolve(this.url, relURL)
+          return result
+        }
+      }
     }
-    return out
-  }
-
-  /**
-   * Computer the set difference, but compare the serializations of
-   * the objects rather than the pointers.  Slower, but should still
-   * be close to linear time.
-   */
-  diff (from, to) {
-    const add = new Set()
-    const remove = new Set()
-    const fmap = this.keyMap(from)
-    const tmap = this.keyMap(to)
-    for (const [key, val] of fmap.entries()) {
-      if (!tmap.has(key)) remove.add(val)
-    }
-    for (const [key, val] of tmap.entries()) {
-      if (!fmap.has(key)) add.add(val)
-    }
-    return { add, remove }
+    return undefined
   }
 }
 
 module.exports = Client
 
 }).call(this,"/client.js")
-},{"./eventsource":46,"./jsonlines":47,"./watchable-set":59,"abort-controller":48,"debug":49,"eventemitter3":53,"http-link-header":54,"node-fetch":58,"url":40}],46:[function(require,module,exports){
+},{"./eventsource":41,"./linkrel":42,"axios":43,"debug":68,"delay":70,"eventemitter3":71,"http-link-header":72,"keyed-set":74,"url":35}],41:[function(require,module,exports){
 (function (__filename){
 /*
   I was using npm package eventsource and getting bizarre bugs, where
@@ -8537,207 +8350,1448 @@ class EventSource extends EventEmitter {
 module.exports = EventSource
 
 }).call(this,"/eventsource.js")
-},{"debug":49,"eventemitter3":53,"http":34,"https":7,"url":40}],47:[function(require,module,exports){
-// fix the absurdly bad naming of the exports from the jsonlines pkg
-//
-// Calling them the same as JSON.parse and JSON.stringify when their
-// interface is totally different?  Really?
-//
-// Also provide non-streaming versions
-//
+},{"debug":68,"eventemitter3":71,"http":29,"https":7,"url":35}],42:[function(require,module,exports){
+/*
+  Webdup uses a link-rel to point to the event-stream from the dataset
+  resource.  But while it's not standardized, the actual link relation
+  text is somewhat in flux, so we allow sending several different
+  ones, and looking for several different ones.
+*/
 
-const Stringifier = require('jsonlines/lib/stringifier')
-const Parser = require('jsonlines/lib/parser')
+const rels = [
+  'https://sandhawke.github.io/webdup',
+  'https://webdup.org/v1',
+  'x-webdup',
+]
 
-function parse (text) {
-  return text.split(/\n/).map(JSON.parse)
+module.exports = {
+  send: [...rels],
+  lookFor: [...rels]
 }
 
-function stringify (item) {
-  return JSON.stringify(item)
-  // return items.map(JSON.stringify).join('/n')
-}
-
-module.exports = { Parser, Stringifier, parse, stringify }
-
-},{"jsonlines/lib/parser":55,"jsonlines/lib/stringifier":56}],48:[function(require,module,exports){
-/**
- * @author Toru Nagashima <https://github.com/mysticatea>
- * @copyright 2017 Toru Nagashima. All rights reserved.
- * See LICENSE file in root directory for full license.
- */
+},{}],43:[function(require,module,exports){
+module.exports = require('./lib/axios');
+},{"./lib/axios":45}],44:[function(require,module,exports){
+(function (process){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
+var utils = require('./../utils');
+var settle = require('./../core/settle');
+var buildURL = require('./../helpers/buildURL');
+var parseHeaders = require('./../helpers/parseHeaders');
+var isURLSameOrigin = require('./../helpers/isURLSameOrigin');
+var createError = require('../core/createError');
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || require('./../helpers/btoa');
 
-var eventTargetShim = require('event-target-shim');
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
 
-/**
- * Aborted flag for each instances.
- * @type {WeakMap<AbortSignal, boolean>}
- */
-const abortedFlags = new WeakMap();
-
-/**
- * The signal class.
- * @constructor
- * @name AbortSignal
- * @see https://dom.spec.whatwg.org/#abortsignal
- */
-class AbortSignal extends eventTargetShim.EventTarget {
-    /**
-     * AbortSignal cannot be constructed directly.
-     */
-    constructor() {
-        super();
-        throw new TypeError("AbortSignal cannot be constructed directly")
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
-    /**
-     * Returns `true` if this `AbortSignal`'s `AbortController` has signaled to abort, and `false` otherwise.
-     * @type {boolean}
-     */
-    get aborted() {
-        const aborted = abortedFlags.get(this);
-        if (typeof aborted !== "boolean") {
-            throw new TypeError(
-                `Expected 'this' to be an 'AbortSignal' object, but got ${
-                    this === null ? "null" : typeof this
-                }`
-            )
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = require('./../helpers/cookies');
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
         }
-        return aborted
+      });
     }
 
-    /**
-     * The event attribute for `abort` event.
-     * @property
-     * @memberof AbortSignal
-     * @name onabort
-     * @type {Function}
-     */
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+}).call(this,require('_process'))
+},{"../core/createError":51,"./../core/settle":54,"./../helpers/btoa":58,"./../helpers/buildURL":59,"./../helpers/cookies":61,"./../helpers/isURLSameOrigin":63,"./../helpers/parseHeaders":65,"./../utils":67,"_process":13}],45:[function(require,module,exports){
+'use strict';
+
+var utils = require('./utils');
+var bind = require('./helpers/bind');
+var Axios = require('./core/Axios');
+var defaults = require('./defaults');
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
 }
 
-// Properties should be enumerable.
-Object.defineProperties(AbortSignal.prototype, {
-    aborted: {
-        enumerable: true,
-    },
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = require('./cancel/Cancel');
+axios.CancelToken = require('./cancel/CancelToken');
+axios.isCancel = require('./cancel/isCancel');
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = require('./helpers/spread');
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+},{"./cancel/Cancel":46,"./cancel/CancelToken":47,"./cancel/isCancel":48,"./core/Axios":49,"./defaults":56,"./helpers/bind":57,"./helpers/spread":66,"./utils":67}],46:[function(require,module,exports){
+'use strict';
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+},{}],47:[function(require,module,exports){
+'use strict';
+
+var Cancel = require('./Cancel');
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+},{"./Cancel":46}],48:[function(require,module,exports){
+'use strict';
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+},{}],49:[function(require,module,exports){
+'use strict';
+
+var defaults = require('./../defaults');
+var utils = require('./../utils');
+var InterceptorManager = require('./InterceptorManager');
+var dispatchRequest = require('./dispatchRequest');
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
+  config.method = config.method.toLowerCase();
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
 });
 
-if (typeof Symbol === "function" && typeof Symbol.toStringTag === "symbol") {
-    Object.defineProperty(AbortSignal.prototype, Symbol.toStringTag, {
-        configurable: true,
-        value: "AbortSignal",
-    });
-}
-
-eventTargetShim.defineEventAttribute(AbortSignal.prototype, "abort");
-
-/**
- * Create an AbortSignal object.
- * @returns {AbortSignal} The created AbortSignal object.
- */
-function createAbortSignal() {
-    const signal = Object.create(AbortSignal.prototype);
-    eventTargetShim.EventTarget.call(signal);
-    abortedFlags.set(signal, false);
-    return signal
-}
-
-/**
- * Abort a given signal.
- * @param {AbortSignal} signal The signal to abort.
- * @returns {void}
- */
-function abortSignal(signal) {
-    if (abortedFlags.get(signal) !== false) {
-        return
-    }
-
-    abortedFlags.set(signal, true);
-    signal.dispatchEvent({ type: "abort" });
-}
-
-/**
- * Associated signals.
- * @type {WeakMap<AbortController, AbortSignal>}
- */
-const signals = new WeakMap();
-
-/**
- * Get the associated signal of a given controller.
- * @param {AbortController} controller The controller to get its associated signal.
- * @returns {AbortSignal} The associated signal.
- */
-function getSignal(controller) {
-    const signal = signals.get(controller);
-    if (signal == null) {
-        throw new TypeError(
-            `Expected 'this' to be an 'AbortController' object, but got ${
-                controller === null ? "null" : typeof controller
-            }`
-        )
-    }
-    return signal
-}
-
-/**
- * The AbortController.
- * @see https://dom.spec.whatwg.org/#abortcontroller
- */
-class AbortController {
-    /**
-     * Initialize this controller.
-     */
-    constructor() {
-        signals.set(this, createAbortSignal());
-    }
-
-    /**
-     * Returns the `AbortSignal` object associated with this object.
-     * @type {AbortSignal}
-     */
-    get signal() {
-        return getSignal(this)
-    }
-
-    /**
-     * Abort and signal to any observers that the associated activity is to be aborted.
-     * @returns {void}
-     */
-    abort() {
-        // Not depend on this.signal which is overridable.
-        const signal = getSignal(this);
-        if (signal != null) {
-            abortSignal(signal);
-        }
-    }
-}
-
-// Properties should be enumerable.
-Object.defineProperties(AbortController.prototype, {
-    signal: { enumerable: true },
-    abort: { enumerable: true },
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
 });
 
-if (typeof Symbol === "function" && typeof Symbol.toStringTag === "symbol") {
-    Object.defineProperty(AbortController.prototype, Symbol.toStringTag, {
-        configurable: true,
-        value: "AbortController",
-    });
+module.exports = Axios;
+
+},{"./../defaults":56,"./../utils":67,"./InterceptorManager":50,"./dispatchRequest":52}],50:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+function InterceptorManager() {
+  this.handlers = [];
 }
 
-exports.default = AbortController;
-exports.AbortController = AbortController;
-exports.AbortSignal = AbortSignal;
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
 
-module.exports = AbortController
-module.exports.AbortController = module.exports["default"] = AbortController
-module.exports.AbortSignal = AbortSignal
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
 
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
 
-},{"event-target-shim":52}],49:[function(require,module,exports){
+module.exports = InterceptorManager;
+
+},{"./../utils":67}],51:[function(require,module,exports){
+'use strict';
+
+var enhanceError = require('./enhanceError');
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+},{"./enhanceError":53}],52:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+var transformData = require('./transformData');
+var isCancel = require('../cancel/isCancel');
+var defaults = require('../defaults');
+var isAbsoluteURL = require('./../helpers/isAbsoluteURL');
+var combineURLs = require('./../helpers/combineURLs');
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+},{"../cancel/isCancel":48,"../defaults":56,"./../helpers/combineURLs":60,"./../helpers/isAbsoluteURL":62,"./../utils":67,"./transformData":55}],53:[function(require,module,exports){
+'use strict';
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+},{}],54:[function(require,module,exports){
+'use strict';
+
+var createError = require('./createError');
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+},{"./createError":51}],55:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+},{"./../utils":67}],56:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var utils = require('./utils');
+var normalizeHeaderName = require('./helpers/normalizeHeaderName');
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = require('./adapters/xhr');
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = require('./adapters/http');
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+}).call(this,require('_process'))
+},{"./adapters/http":44,"./adapters/xhr":44,"./helpers/normalizeHeaderName":64,"./utils":67,"_process":13}],57:[function(require,module,exports){
+'use strict';
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+},{}],58:[function(require,module,exports){
+'use strict';
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+},{}],59:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+},{"./../utils":67}],60:[function(require,module,exports){
+'use strict';
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+},{}],61:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+  (function standardBrowserEnv() {
+    return {
+      write: function write(name, value, expires, path, domain, secure) {
+        var cookie = [];
+        cookie.push(name + '=' + encodeURIComponent(value));
+
+        if (utils.isNumber(expires)) {
+          cookie.push('expires=' + new Date(expires).toGMTString());
+        }
+
+        if (utils.isString(path)) {
+          cookie.push('path=' + path);
+        }
+
+        if (utils.isString(domain)) {
+          cookie.push('domain=' + domain);
+        }
+
+        if (secure === true) {
+          cookie.push('secure');
+        }
+
+        document.cookie = cookie.join('; ');
+      },
+
+      read: function read(name) {
+        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+        return (match ? decodeURIComponent(match[3]) : null);
+      },
+
+      remove: function remove(name) {
+        this.write(name, '', Date.now() - 86400000);
+      }
+    };
+  })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return {
+      write: function write() {},
+      read: function read() { return null; },
+      remove: function remove() {}
+    };
+  })()
+);
+
+},{"./../utils":67}],62:[function(require,module,exports){
+'use strict';
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+},{}],63:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+  (function standardBrowserEnv() {
+    var msie = /(msie|trident)/i.test(navigator.userAgent);
+    var urlParsingNode = document.createElement('a');
+    var originURL;
+
+    /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+    function resolveURL(url) {
+      var href = url;
+
+      if (msie) {
+        // IE needs attribute set twice to normalize properties
+        urlParsingNode.setAttribute('href', href);
+        href = urlParsingNode.href;
+      }
+
+      urlParsingNode.setAttribute('href', href);
+
+      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+      return {
+        href: urlParsingNode.href,
+        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+        host: urlParsingNode.host,
+        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+        hostname: urlParsingNode.hostname,
+        port: urlParsingNode.port,
+        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+                  urlParsingNode.pathname :
+                  '/' + urlParsingNode.pathname
+      };
+    }
+
+    originURL = resolveURL(window.location.href);
+
+    /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+    return function isURLSameOrigin(requestURL) {
+      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+      return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+    };
+  })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return function isURLSameOrigin() {
+      return true;
+    };
+  })()
+);
+
+},{"./../utils":67}],64:[function(require,module,exports){
+'use strict';
+
+var utils = require('../utils');
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+},{"../utils":67}],65:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+},{"./../utils":67}],66:[function(require,module,exports){
+'use strict';
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+},{}],67:[function(require,module,exports){
+'use strict';
+
+var bind = require('./helpers/bind');
+var isBuffer = require('is-buffer');
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+},{"./helpers/bind":57,"is-buffer":73}],68:[function(require,module,exports){
 (function (process){
 /* eslint-env browser */
 
@@ -9005,7 +10059,7 @@ formatters.j = function (v) {
 };
 
 }).call(this,require('_process'))
-},{"./common":50,"_process":13}],50:[function(require,module,exports){
+},{"./common":69,"_process":13}],69:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -9273,7 +10327,7 @@ function setup(env) {
 
 module.exports = setup;
 
-},{"ms":57}],51:[function(require,module,exports){
+},{"ms":76}],70:[function(require,module,exports){
 'use strict';
 
 const createAbortError = () => {
@@ -9339,880 +10393,7 @@ delay.createWithTimers = ({clearTimeout, setTimeout}) => {
 module.exports = delay;
 module.exports.default = delay;
 
-},{}],52:[function(require,module,exports){
-/**
- * @author Toru Nagashima <https://github.com/mysticatea>
- * @copyright 2015 Toru Nagashima. All rights reserved.
- * See LICENSE file in root directory for full license.
- */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-/**
- * @typedef {object} PrivateData
- * @property {EventTarget} eventTarget The event target.
- * @property {{type:string}} event The original event object.
- * @property {number} eventPhase The current event phase.
- * @property {EventTarget|null} currentTarget The current event target.
- * @property {boolean} canceled The flag to prevent default.
- * @property {boolean} stopped The flag to stop propagation.
- * @property {boolean} immediateStopped The flag to stop propagation immediately.
- * @property {Function|null} passiveListener The listener if the current listener is passive. Otherwise this is null.
- * @property {number} timeStamp The unix time.
- * @private
- */
-
-/**
- * Private data for event wrappers.
- * @type {WeakMap<Event, PrivateData>}
- * @private
- */
-const privateData = new WeakMap();
-
-/**
- * Cache for wrapper classes.
- * @type {WeakMap<Object, Function>}
- * @private
- */
-const wrappers = new WeakMap();
-
-/**
- * Get private data.
- * @param {Event} event The event object to get private data.
- * @returns {PrivateData} The private data of the event.
- * @private
- */
-function pd(event) {
-    const retv = privateData.get(event);
-    console.assert(
-        retv != null,
-        "'this' is expected an Event object, but got",
-        event
-    );
-    return retv
-}
-
-/**
- * https://dom.spec.whatwg.org/#set-the-canceled-flag
- * @param data {PrivateData} private data.
- */
-function setCancelFlag(data) {
-    if (data.passiveListener != null) {
-        if (
-            typeof console !== "undefined" &&
-            typeof console.error === "function"
-        ) {
-            console.error(
-                "Unable to preventDefault inside passive event listener invocation.",
-                data.passiveListener
-            );
-        }
-        return
-    }
-    if (!data.event.cancelable) {
-        return
-    }
-
-    data.canceled = true;
-    if (typeof data.event.preventDefault === "function") {
-        data.event.preventDefault();
-    }
-}
-
-/**
- * @see https://dom.spec.whatwg.org/#interface-event
- * @private
- */
-/**
- * The event wrapper.
- * @constructor
- * @param {EventTarget} eventTarget The event target of this dispatching.
- * @param {Event|{type:string}} event The original event to wrap.
- */
-function Event(eventTarget, event) {
-    privateData.set(this, {
-        eventTarget,
-        event,
-        eventPhase: 2,
-        currentTarget: eventTarget,
-        canceled: false,
-        stopped: false,
-        immediateStopped: false,
-        passiveListener: null,
-        timeStamp: event.timeStamp || Date.now(),
-    });
-
-    // https://heycam.github.io/webidl/#Unforgeable
-    Object.defineProperty(this, "isTrusted", { value: false, enumerable: true });
-
-    // Define accessors
-    const keys = Object.keys(event);
-    for (let i = 0; i < keys.length; ++i) {
-        const key = keys[i];
-        if (!(key in this)) {
-            Object.defineProperty(this, key, defineRedirectDescriptor(key));
-        }
-    }
-}
-
-// Should be enumerable, but class methods are not enumerable.
-Event.prototype = {
-    /**
-     * The type of this event.
-     * @type {string}
-     */
-    get type() {
-        return pd(this).event.type
-    },
-
-    /**
-     * The target of this event.
-     * @type {EventTarget}
-     */
-    get target() {
-        return pd(this).eventTarget
-    },
-
-    /**
-     * The target of this event.
-     * @type {EventTarget}
-     */
-    get currentTarget() {
-        return pd(this).currentTarget
-    },
-
-    /**
-     * @returns {EventTarget[]} The composed path of this event.
-     */
-    composedPath() {
-        const currentTarget = pd(this).currentTarget;
-        if (currentTarget == null) {
-            return []
-        }
-        return [currentTarget]
-    },
-
-    /**
-     * Constant of NONE.
-     * @type {number}
-     */
-    get NONE() {
-        return 0
-    },
-
-    /**
-     * Constant of CAPTURING_PHASE.
-     * @type {number}
-     */
-    get CAPTURING_PHASE() {
-        return 1
-    },
-
-    /**
-     * Constant of AT_TARGET.
-     * @type {number}
-     */
-    get AT_TARGET() {
-        return 2
-    },
-
-    /**
-     * Constant of BUBBLING_PHASE.
-     * @type {number}
-     */
-    get BUBBLING_PHASE() {
-        return 3
-    },
-
-    /**
-     * The target of this event.
-     * @type {number}
-     */
-    get eventPhase() {
-        return pd(this).eventPhase
-    },
-
-    /**
-     * Stop event bubbling.
-     * @returns {void}
-     */
-    stopPropagation() {
-        const data = pd(this);
-
-        data.stopped = true;
-        if (typeof data.event.stopPropagation === "function") {
-            data.event.stopPropagation();
-        }
-    },
-
-    /**
-     * Stop event bubbling.
-     * @returns {void}
-     */
-    stopImmediatePropagation() {
-        const data = pd(this);
-
-        data.stopped = true;
-        data.immediateStopped = true;
-        if (typeof data.event.stopImmediatePropagation === "function") {
-            data.event.stopImmediatePropagation();
-        }
-    },
-
-    /**
-     * The flag to be bubbling.
-     * @type {boolean}
-     */
-    get bubbles() {
-        return Boolean(pd(this).event.bubbles)
-    },
-
-    /**
-     * The flag to be cancelable.
-     * @type {boolean}
-     */
-    get cancelable() {
-        return Boolean(pd(this).event.cancelable)
-    },
-
-    /**
-     * Cancel this event.
-     * @returns {void}
-     */
-    preventDefault() {
-        setCancelFlag(pd(this));
-    },
-
-    /**
-     * The flag to indicate cancellation state.
-     * @type {boolean}
-     */
-    get defaultPrevented() {
-        return pd(this).canceled
-    },
-
-    /**
-     * The flag to be composed.
-     * @type {boolean}
-     */
-    get composed() {
-        return Boolean(pd(this).event.composed)
-    },
-
-    /**
-     * The unix time of this event.
-     * @type {number}
-     */
-    get timeStamp() {
-        return pd(this).timeStamp
-    },
-
-    /**
-     * The target of this event.
-     * @type {EventTarget}
-     * @deprecated
-     */
-    get srcElement() {
-        return pd(this).eventTarget
-    },
-
-    /**
-     * The flag to stop event bubbling.
-     * @type {boolean}
-     * @deprecated
-     */
-    get cancelBubble() {
-        return pd(this).stopped
-    },
-    set cancelBubble(value) {
-        if (!value) {
-            return
-        }
-        const data = pd(this);
-
-        data.stopped = true;
-        if (typeof data.event.cancelBubble === "boolean") {
-            data.event.cancelBubble = true;
-        }
-    },
-
-    /**
-     * The flag to indicate cancellation state.
-     * @type {boolean}
-     * @deprecated
-     */
-    get returnValue() {
-        return !pd(this).canceled
-    },
-    set returnValue(value) {
-        if (!value) {
-            setCancelFlag(pd(this));
-        }
-    },
-
-    /**
-     * Initialize this event object. But do nothing under event dispatching.
-     * @param {string} type The event type.
-     * @param {boolean} [bubbles=false] The flag to be possible to bubble up.
-     * @param {boolean} [cancelable=false] The flag to be possible to cancel.
-     * @deprecated
-     */
-    initEvent() {
-        // Do nothing.
-    },
-};
-
-// `constructor` is not enumerable.
-Object.defineProperty(Event.prototype, "constructor", {
-    value: Event,
-    configurable: true,
-    writable: true,
-});
-
-// Ensure `event instanceof window.Event` is `true`.
-if (typeof window !== "undefined" && typeof window.Event !== "undefined") {
-    Object.setPrototypeOf(Event.prototype, window.Event.prototype);
-
-    // Make association for wrappers.
-    wrappers.set(window.Event.prototype, Event);
-}
-
-/**
- * Get the property descriptor to redirect a given property.
- * @param {string} key Property name to define property descriptor.
- * @returns {PropertyDescriptor} The property descriptor to redirect the property.
- * @private
- */
-function defineRedirectDescriptor(key) {
-    return {
-        get() {
-            return pd(this).event[key]
-        },
-        set(value) {
-            pd(this).event[key] = value;
-        },
-        configurable: true,
-        enumerable: true,
-    }
-}
-
-/**
- * Get the property descriptor to call a given method property.
- * @param {string} key Property name to define property descriptor.
- * @returns {PropertyDescriptor} The property descriptor to call the method property.
- * @private
- */
-function defineCallDescriptor(key) {
-    return {
-        value() {
-            const event = pd(this).event;
-            return event[key].apply(event, arguments)
-        },
-        configurable: true,
-        enumerable: true,
-    }
-}
-
-/**
- * Define new wrapper class.
- * @param {Function} BaseEvent The base wrapper class.
- * @param {Object} proto The prototype of the original event.
- * @returns {Function} The defined wrapper class.
- * @private
- */
-function defineWrapper(BaseEvent, proto) {
-    const keys = Object.keys(proto);
-    if (keys.length === 0) {
-        return BaseEvent
-    }
-
-    /** CustomEvent */
-    function CustomEvent(eventTarget, event) {
-        BaseEvent.call(this, eventTarget, event);
-    }
-
-    CustomEvent.prototype = Object.create(BaseEvent.prototype, {
-        constructor: { value: CustomEvent, configurable: true, writable: true },
-    });
-
-    // Define accessors.
-    for (let i = 0; i < keys.length; ++i) {
-        const key = keys[i];
-        if (!(key in BaseEvent.prototype)) {
-            const descriptor = Object.getOwnPropertyDescriptor(proto, key);
-            const isFunc = typeof descriptor.value === "function";
-            Object.defineProperty(
-                CustomEvent.prototype,
-                key,
-                isFunc
-                    ? defineCallDescriptor(key)
-                    : defineRedirectDescriptor(key)
-            );
-        }
-    }
-
-    return CustomEvent
-}
-
-/**
- * Get the wrapper class of a given prototype.
- * @param {Object} proto The prototype of the original event to get its wrapper.
- * @returns {Function} The wrapper class.
- * @private
- */
-function getWrapper(proto) {
-    if (proto == null || proto === Object.prototype) {
-        return Event
-    }
-
-    let wrapper = wrappers.get(proto);
-    if (wrapper == null) {
-        wrapper = defineWrapper(getWrapper(Object.getPrototypeOf(proto)), proto);
-        wrappers.set(proto, wrapper);
-    }
-    return wrapper
-}
-
-/**
- * Wrap a given event to management a dispatching.
- * @param {EventTarget} eventTarget The event target of this dispatching.
- * @param {Object} event The event to wrap.
- * @returns {Event} The wrapper instance.
- * @private
- */
-function wrapEvent(eventTarget, event) {
-    const Wrapper = getWrapper(Object.getPrototypeOf(event));
-    return new Wrapper(eventTarget, event)
-}
-
-/**
- * Get the immediateStopped flag of a given event.
- * @param {Event} event The event to get.
- * @returns {boolean} The flag to stop propagation immediately.
- * @private
- */
-function isStopped(event) {
-    return pd(event).immediateStopped
-}
-
-/**
- * Set the current event phase of a given event.
- * @param {Event} event The event to set current target.
- * @param {number} eventPhase New event phase.
- * @returns {void}
- * @private
- */
-function setEventPhase(event, eventPhase) {
-    pd(event).eventPhase = eventPhase;
-}
-
-/**
- * Set the current target of a given event.
- * @param {Event} event The event to set current target.
- * @param {EventTarget|null} currentTarget New current target.
- * @returns {void}
- * @private
- */
-function setCurrentTarget(event, currentTarget) {
-    pd(event).currentTarget = currentTarget;
-}
-
-/**
- * Set a passive listener of a given event.
- * @param {Event} event The event to set current target.
- * @param {Function|null} passiveListener New passive listener.
- * @returns {void}
- * @private
- */
-function setPassiveListener(event, passiveListener) {
-    pd(event).passiveListener = passiveListener;
-}
-
-/**
- * @typedef {object} ListenerNode
- * @property {Function} listener
- * @property {1|2|3} listenerType
- * @property {boolean} passive
- * @property {boolean} once
- * @property {ListenerNode|null} next
- * @private
- */
-
-/**
- * @type {WeakMap<object, Map<string, ListenerNode>>}
- * @private
- */
-const listenersMap = new WeakMap();
-
-// Listener types
-const CAPTURE = 1;
-const BUBBLE = 2;
-const ATTRIBUTE = 3;
-
-/**
- * Check whether a given value is an object or not.
- * @param {any} x The value to check.
- * @returns {boolean} `true` if the value is an object.
- */
-function isObject(x) {
-    return x !== null && typeof x === "object" //eslint-disable-line no-restricted-syntax
-}
-
-/**
- * Get listeners.
- * @param {EventTarget} eventTarget The event target to get.
- * @returns {Map<string, ListenerNode>} The listeners.
- * @private
- */
-function getListeners(eventTarget) {
-    const listeners = listenersMap.get(eventTarget);
-    if (listeners == null) {
-        throw new TypeError(
-            "'this' is expected an EventTarget object, but got another value."
-        )
-    }
-    return listeners
-}
-
-/**
- * Get the property descriptor for the event attribute of a given event.
- * @param {string} eventName The event name to get property descriptor.
- * @returns {PropertyDescriptor} The property descriptor.
- * @private
- */
-function defineEventAttributeDescriptor(eventName) {
-    return {
-        get() {
-            const listeners = getListeners(this);
-            let node = listeners.get(eventName);
-            while (node != null) {
-                if (node.listenerType === ATTRIBUTE) {
-                    return node.listener
-                }
-                node = node.next;
-            }
-            return null
-        },
-
-        set(listener) {
-            if (typeof listener !== "function" && !isObject(listener)) {
-                listener = null; // eslint-disable-line no-param-reassign
-            }
-            const listeners = getListeners(this);
-
-            // Traverse to the tail while removing old value.
-            let prev = null;
-            let node = listeners.get(eventName);
-            while (node != null) {
-                if (node.listenerType === ATTRIBUTE) {
-                    // Remove old value.
-                    if (prev !== null) {
-                        prev.next = node.next;
-                    } else if (node.next !== null) {
-                        listeners.set(eventName, node.next);
-                    } else {
-                        listeners.delete(eventName);
-                    }
-                } else {
-                    prev = node;
-                }
-
-                node = node.next;
-            }
-
-            // Add new value.
-            if (listener !== null) {
-                const newNode = {
-                    listener,
-                    listenerType: ATTRIBUTE,
-                    passive: false,
-                    once: false,
-                    next: null,
-                };
-                if (prev === null) {
-                    listeners.set(eventName, newNode);
-                } else {
-                    prev.next = newNode;
-                }
-            }
-        },
-        configurable: true,
-        enumerable: true,
-    }
-}
-
-/**
- * Define an event attribute (e.g. `eventTarget.onclick`).
- * @param {Object} eventTargetPrototype The event target prototype to define an event attrbite.
- * @param {string} eventName The event name to define.
- * @returns {void}
- */
-function defineEventAttribute(eventTargetPrototype, eventName) {
-    Object.defineProperty(
-        eventTargetPrototype,
-        `on${eventName}`,
-        defineEventAttributeDescriptor(eventName)
-    );
-}
-
-/**
- * Define a custom EventTarget with event attributes.
- * @param {string[]} eventNames Event names for event attributes.
- * @returns {EventTarget} The custom EventTarget.
- * @private
- */
-function defineCustomEventTarget(eventNames) {
-    /** CustomEventTarget */
-    function CustomEventTarget() {
-        EventTarget.call(this);
-    }
-
-    CustomEventTarget.prototype = Object.create(EventTarget.prototype, {
-        constructor: {
-            value: CustomEventTarget,
-            configurable: true,
-            writable: true,
-        },
-    });
-
-    for (let i = 0; i < eventNames.length; ++i) {
-        defineEventAttribute(CustomEventTarget.prototype, eventNames[i]);
-    }
-
-    return CustomEventTarget
-}
-
-/**
- * EventTarget.
- *
- * - This is constructor if no arguments.
- * - This is a function which returns a CustomEventTarget constructor if there are arguments.
- *
- * For example:
- *
- *     class A extends EventTarget {}
- *     class B extends EventTarget("message") {}
- *     class C extends EventTarget("message", "error") {}
- *     class D extends EventTarget(["message", "error"]) {}
- */
-function EventTarget() {
-    /*eslint-disable consistent-return */
-    if (this instanceof EventTarget) {
-        listenersMap.set(this, new Map());
-        return
-    }
-    if (arguments.length === 1 && Array.isArray(arguments[0])) {
-        return defineCustomEventTarget(arguments[0])
-    }
-    if (arguments.length > 0) {
-        const types = new Array(arguments.length);
-        for (let i = 0; i < arguments.length; ++i) {
-            types[i] = arguments[i];
-        }
-        return defineCustomEventTarget(types)
-    }
-    throw new TypeError("Cannot call a class as a function")
-    /*eslint-enable consistent-return */
-}
-
-// Should be enumerable, but class methods are not enumerable.
-EventTarget.prototype = {
-    /**
-     * Add a given listener to this event target.
-     * @param {string} eventName The event name to add.
-     * @param {Function} listener The listener to add.
-     * @param {boolean|{capture?:boolean,passive?:boolean,once?:boolean}} [options] The options for this listener.
-     * @returns {void}
-     */
-    addEventListener(eventName, listener, options) {
-        if (listener == null) {
-            return
-        }
-        if (typeof listener !== "function" && !isObject(listener)) {
-            throw new TypeError("'listener' should be a function or an object.")
-        }
-
-        const listeners = getListeners(this);
-        const optionsIsObj = isObject(options);
-        const capture = optionsIsObj
-            ? Boolean(options.capture)
-            : Boolean(options);
-        const listenerType = capture ? CAPTURE : BUBBLE;
-        const newNode = {
-            listener,
-            listenerType,
-            passive: optionsIsObj && Boolean(options.passive),
-            once: optionsIsObj && Boolean(options.once),
-            next: null,
-        };
-
-        // Set it as the first node if the first node is null.
-        let node = listeners.get(eventName);
-        if (node === undefined) {
-            listeners.set(eventName, newNode);
-            return
-        }
-
-        // Traverse to the tail while checking duplication..
-        let prev = null;
-        while (node != null) {
-            if (
-                node.listener === listener &&
-                node.listenerType === listenerType
-            ) {
-                // Should ignore duplication.
-                return
-            }
-            prev = node;
-            node = node.next;
-        }
-
-        // Add it.
-        prev.next = newNode;
-    },
-
-    /**
-     * Remove a given listener from this event target.
-     * @param {string} eventName The event name to remove.
-     * @param {Function} listener The listener to remove.
-     * @param {boolean|{capture?:boolean,passive?:boolean,once?:boolean}} [options] The options for this listener.
-     * @returns {void}
-     */
-    removeEventListener(eventName, listener, options) {
-        if (listener == null) {
-            return
-        }
-
-        const listeners = getListeners(this);
-        const capture = isObject(options)
-            ? Boolean(options.capture)
-            : Boolean(options);
-        const listenerType = capture ? CAPTURE : BUBBLE;
-
-        let prev = null;
-        let node = listeners.get(eventName);
-        while (node != null) {
-            if (
-                node.listener === listener &&
-                node.listenerType === listenerType
-            ) {
-                if (prev !== null) {
-                    prev.next = node.next;
-                } else if (node.next !== null) {
-                    listeners.set(eventName, node.next);
-                } else {
-                    listeners.delete(eventName);
-                }
-                return
-            }
-
-            prev = node;
-            node = node.next;
-        }
-    },
-
-    /**
-     * Dispatch a given event.
-     * @param {Event|{type:string}} event The event to dispatch.
-     * @returns {boolean} `false` if canceled.
-     */
-    dispatchEvent(event) {
-        if (event == null || typeof event.type !== "string") {
-            throw new TypeError('"event.type" should be a string.')
-        }
-
-        // If listeners aren't registered, terminate.
-        const listeners = getListeners(this);
-        const eventName = event.type;
-        let node = listeners.get(eventName);
-        if (node == null) {
-            return true
-        }
-
-        // Since we cannot rewrite several properties, so wrap object.
-        const wrappedEvent = wrapEvent(this, event);
-
-        // This doesn't process capturing phase and bubbling phase.
-        // This isn't participating in a tree.
-        let prev = null;
-        while (node != null) {
-            // Remove this listener if it's once
-            if (node.once) {
-                if (prev !== null) {
-                    prev.next = node.next;
-                } else if (node.next !== null) {
-                    listeners.set(eventName, node.next);
-                } else {
-                    listeners.delete(eventName);
-                }
-            } else {
-                prev = node;
-            }
-
-            // Call this listener
-            setPassiveListener(
-                wrappedEvent,
-                node.passive ? node.listener : null
-            );
-            if (typeof node.listener === "function") {
-                try {
-                    node.listener.call(this, wrappedEvent);
-                } catch (err) {
-                    if (
-                        typeof console !== "undefined" &&
-                        typeof console.error === "function"
-                    ) {
-                        console.error(err);
-                    }
-                }
-            } else if (
-                node.listenerType !== ATTRIBUTE &&
-                typeof node.listener.handleEvent === "function"
-            ) {
-                node.listener.handleEvent(wrappedEvent);
-            }
-
-            // Break if `event.stopImmediatePropagation` was called.
-            if (isStopped(wrappedEvent)) {
-                break
-            }
-
-            node = node.next;
-        }
-        setPassiveListener(wrappedEvent, null);
-        setEventPhase(wrappedEvent, 0);
-        setCurrentTarget(wrappedEvent, null);
-
-        return !wrappedEvent.defaultPrevented
-    },
-};
-
-// `constructor` is not enumerable.
-Object.defineProperty(EventTarget.prototype, "constructor", {
-    value: EventTarget,
-    configurable: true,
-    writable: true,
-});
-
-// Ensure `eventTarget instanceof window.EventTarget` is `true`.
-if (
-    typeof window !== "undefined" &&
-    typeof window.EventTarget !== "undefined"
-) {
-    Object.setPrototypeOf(EventTarget.prototype, window.EventTarget.prototype);
-}
-
-exports.defineEventAttribute = defineEventAttribute;
-exports.EventTarget = EventTarget;
-exports.default = EventTarget;
-
-module.exports = EventTarget
-module.exports.EventTarget = module.exports["default"] = EventTarget
-module.exports.defineEventAttribute = defineEventAttribute
-
-
-},{}],53:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty
@@ -10550,7 +10731,7 @@ if ('undefined' !== typeof module) {
   module.exports = EventEmitter;
 }
 
-},{}],54:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 (function (Buffer){
 'use strict'
 
@@ -10903,97 +11084,269 @@ Link.formatAttribute = function( attr, value ) {
 module.exports = Link
 
 }).call(this,{"isBuffer":require("../../../../../.npm-global/lib/node_modules/watchify/node_modules/is-buffer/index.js")})
-},{"../../../../../.npm-global/lib/node_modules/watchify/node_modules/is-buffer/index.js":10}],55:[function(require,module,exports){
-var Transform = require('stream').Transform
+},{"../../../../../.npm-global/lib/node_modules/watchify/node_modules/is-buffer/index.js":10}],73:[function(require,module,exports){
+arguments[4][10][0].apply(exports,arguments)
+},{"dup":10}],74:[function(require,module,exports){
+const EventEmitter = require('events')
+const SmartPatch = require('./smart-patch')
 
-function Parser (options) {
-  if (!(this instanceof Parser)) {
-    throw new TypeError('Cannot call a class as a function')
+class KeyedSet extends EventEmitter {
+  constructor (source, keyFunction) {
+    // console.log('incoming', {source, keyFunction})
+    if (typeof source === 'function') {
+      keyFunction = source
+      source = undefined
+    }
+    if (!keyFunction) keyFunction = JSON.stringify
+    // console.log('.. result', {source, keyFunction})
+
+    super()
+    this.keyMap = new Map()
+    this.keyFunction = keyFunction
+
+    if (source) {
+      this.addAll(source)
+    }
   }
 
-  options = options || {}
+  //
+  // Mutating Methods
+  //
 
-  Transform.call(this, { objectMode: true })
-  this._memory = ''
-  this._emitInvalidLines = (options.emitInvalidLines || false)
-}
-
-Parser.prototype = Object.create(Transform.prototype)
-
-Parser.prototype._handleLines = function (lines, cb) {
-  for (var i = 0; i < lines.length; i++) {
-    if (lines[i] === '') continue
-
-    var err = null
-    var json = null
-    try {
-      json = JSON.parse(lines[i])
-    } catch (_err) {
-      _err.source = lines[i]
-      err = _err
-    }
-
-    if (err) {
-      if (this._emitInvalidLines) {
-        this.emit('invalid-line', err)
+  addAll (source) {
+    // console.log('doing addAll %o', source)
+    if (source.keyMap && source.keyFunction === this.keyFunction) {
+      if (this.size === 0) {
+        this.keyMap = new Map(source.keyMap)
       } else {
-        return cb(err)
+        for (const [k, v] of source.keyMap.entries()) this.keyMap.set(k, v)
       }
     } else {
-      this.push(json)
+      for (const i of source) this.add(i)
+    }
+  }
+  add (item) {
+    this.addKey(this.keyFunction(item), item)
+  }
+  addKey (key, item) {
+    const already = this.keyMap.get(key)
+    if (!already) {
+      this.keyMap.set(key, item)
+      this.emit('change', { type: 'add', key, item })
     }
   }
 
-  cb(null)
-}
-
-Parser.prototype._transform = function (chunk, encoding, cb) {
-  var lines = (this._memory + chunk.toString()).split('\n')
-
-  this._memory = lines.pop()
-  this._handleLines(lines, cb)
-}
-
-Parser.prototype._flush = function (cb) {
-  if (!this._memory) return cb(null)
-
-  var line = this._memory
-
-  this._memory = ''
-  this._handleLines([ line ], cb)
-}
-
-module.exports = Parser
-
-},{"stream":33}],56:[function(require,module,exports){
-var Transform = require('stream').Transform
-
-function Stringifier () {
-  if (!(this instanceof Stringifier)) {
-    throw new TypeError('Cannot call a class as a function')
+  delete (item) {
+    this.deleteKey(this.keyFunction(item))
+  }
+  deleteKey (key) {
+    const item = this.keyMap.get(key)
+    if (item) {
+      this.keyMap.delete(key)
+      this.emit('change', { type: 'delete', key, item })
+    }
   }
 
-  Transform.call(this, { objectMode: true })
-}
-
-Stringifier.prototype = Object.create(Transform.prototype)
-
-Stringifier.prototype._transform = function (data, _, cb) {
-  var value
-
-  try {
-    value = JSON.stringify(data)
-  } catch (err) {
-    err.source = data
-    return cb(err)
+  clear () {
+    this.keyMap.clear()
+    this.emit('change', { type: 'clear' })
   }
 
-  cb(null, value + '\n')
+  //
+  // Non-Mutating Methods
+  //
+
+  get size () { return this.keyMap.size }
+
+  has (value) {
+    return this.hasKey(this.keyFunction(value))
+  }
+  hasKey (key) {
+    return this.keyMap.has(key)
+  }
+
+  * entries () {
+    for (const item of this.keyMap.values()) {
+      yield [item, item]
+    }
+  }
+  forEach (f, thisArg) {
+    if (thisArg) {
+      for (const item of this.keyMap.values()) f.apply(thisArg, [item])
+    } else {
+      for (const item of this.keyMap.values()) f(item)
+    }
+  }
+
+  // I know it feels a little weird to return the values of the map
+  // when asked for the keys, but we're pretending to be a set here.
+  keys () {
+    return this.keyMap.values()
+  }
+
+  values () {
+    return this.keyMap.values()
+  }
+
+  * [Symbol.iterator] (value) {
+    for (const i of this.keyMap.values()) yield i
+  }
+
+  //
+  // Our cool stuff
+  //
+
+  clone () {
+    const result = this.cloneEmpty()
+    result.addAll(this)
+    return result
+  }
+  cloneEmpty () {
+    return new this.constructor(this.keyFunction)
+  }
+
+  change (event) {
+    if (event.type === 'add') {
+      this.addKey(event.key, event.item)
+    } else if (event.type === 'delete') {
+      this.deleteKey(event.key)
+    } else if (event.type === 'clear') {
+      this.clear()
+    } else throw Error('bad event type: ' + JSON.stringify(event))
+  }
+
+  changeAll (events) {
+    for (const event of events) this.change(event)
+  }
+
+  // We could also implement this by sorting both lists of keys, then
+  // running through them. That would give us a diff in sort-time plus
+  // linear time.  But I think hash lookup like this is probably fine,
+  // maybe better.
+  minus (other) {
+    const result = this.cloneEmpty()
+    for (const [k, v] of this.keyMap.entries()) {
+      if (other.hasKey(k)) continue
+      result.addKey(k, v)
+    }
+    return result
+  }
+
+  diff (newer) {
+    if (newer.size === 0) {
+      if (this.size === 0) {
+        return new SimplePatch(this)
+      } else {
+        return new SimplePatch(this, { type: 'clear' })
+      }
+    }
+
+    const patch = new SimplePatch(this)
+    const ev = {}
+    ev.add = newer.minus(this)
+    ev.delete = this.minus(newer)
+    for (const type of ['delete', 'add']) {
+      for (const [key, item] of ev[type].keyMap.entries()) {
+        patch.push({ type, key, item })
+      }
+    }
+    return patch
+  }
+
+  smartPatch () {
+    return new SmartPatch(this)
+  }
 }
 
-module.exports = Stringifier
+// just a list of change events; which is fine for this.diff()
+class SimplePatch {
+  constructor (base, ...values) {
+    this.base = base
+    this.list = [...values]
+  }
+  get length () {
+    return this.list.length
+  }
+  push (...evs) {
+    this.list.push(...evs)
+  }
+  shift () {
+    return this.list.shift()
+  }
+  [Symbol.iterator] () {
+    return this.list[Symbol.iterator]()
+  }
+}
 
-},{"stream":33}],57:[function(require,module,exports){
+module.exports = KeyedSet
+module.exports.SmartPatch = SmartPatch
+
+},{"./smart-patch":75,"events":6}],75:[function(require,module,exports){
+// much more clever: matchin pairs of changes cancel out. If you add
+// something then delete it, or delete something then add it back,
+// both events go away.  Also, a clear event means we can forget all
+// changes so far.
+class SmartPatch {
+  constructor (base, ...values) {
+    this.cleared = false
+    this.add = base.cloneEmpty()
+    this.delete = base.cloneEmpty()
+    this.push(...values)
+  }
+  push (...evs) {
+    for (const { type, key, item } of evs) {
+      if (type === 'clear') {
+        this.cleared = true
+        this.add.clear()
+        this.delete.clear()
+      } else if (type === 'add') {
+        if (this.delete.hasKey(key)) {
+          this.delete.deleteKey(key) // cancel the pair
+        } else {
+          this.add.addKey(key, item)
+        }
+      } else if (type === 'delete') {
+        if (this.add.hasKey(key)) {
+          this.add.deleteKey(key) // cancel the pair
+        } else {
+          this.delete.addKey(key, item)
+        }
+      } else {
+        throw new Error('unknown event type ' + JSON.stringify(type))
+      }
+    }
+  }
+  shift () {
+    if (this.cleared) {
+      this.cleared = false
+      return { type: 'clear' }
+    }
+    for (const type of ['delete', 'add']) {
+      const { value, done } = this[type].keyMap.entries().next()
+      if (!done) {
+        let [key, item] = value
+        this[type].deleteKey(key)
+        return { type, key, item }
+      }
+    }
+    return undefined
+  }
+  get length () {
+    return (this.cleared ? 1 : 0) + this.add.size + this.delete.size
+  }
+  * [Symbol.iterator] () {
+    if (this.cleared) yield { type: 'clear' }
+    for (const type of ['delete', 'add']) {
+      for (const [key, item] of this[type].keyMap.entries()) {
+        yield { type, key, item }
+      }
+    }
+  }
+}
+
+module.exports = SmartPatch
+
+},{}],76:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -11157,141 +11510,4 @@ function plural(ms, msAbs, n, name) {
   return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
 }
 
-},{}],58:[function(require,module,exports){
-"use strict";
-
-// ref: https://github.com/tc39/proposal-global
-var getGlobal = function () {
-	// the only reliable means to get the global object is
-	// `Function('return this')()`
-	// However, this causes CSP violations in Chrome apps.
-	if (typeof self !== 'undefined') { return self; }
-	if (typeof window !== 'undefined') { return window; }
-	if (typeof global !== 'undefined') { return global; }
-	throw new Error('unable to locate global object');
-}
-
-var global = getGlobal();
-
-module.exports = exports = global.fetch;
-
-// Needed for TypeScript and Webpack.
-exports.default = global.fetch.bind(global);
-
-exports.Headers = global.Headers;
-exports.Request = global.Request;
-exports.Response = global.Response;
-},{}],59:[function(require,module,exports){
-(function (__filename){
-/*
-  Set() + EventEmitter()
-
-  Not sure which it should inherit from, if either.  It has to relay
-  for at least one of the.
-
-  OH -- plus we need to match for DEEP-EQUAL ?!
-*/
-
-const debug = require('debug')(__filename.split('/').slice(-1).join())
-const EventEmitter = require('eventemitter3')
-
-class WatchableSet extends EventEmitter {
-  constructor (init) {
-    super()
-    this.data = new Set()
-    if (init) {
-      for (const i of init) this.data.add(i)
-    }
-    this.id32xor = 0
-    this.changeCounter = 0
-  }
-
-  // So painful.  But otherwise we need to keep a map from all the
-  // stringified versions?  This is why earlier versions of the
-  // protocol had delete by number -- since you need to keep track of
-  // that kind of stuff anyway.  But for quads it's okay because they
-  // are already indexed. 
-  getMatch (obj, str) {
-    const objs = str(obj)
-    debug('Looking for match for %o', objs)
-    for (const item of this.data.keys()) {
-      const st = str(item)
-      debug('..  vs %o', st)
-      if (st === objs) return item
-    }
-    debug('..Failed')
-    return undefined
-  }
-  
-  get length () { return 0 }
-  get size () { return this.data.size }
-
-  add (value) {
-    this.data.add(value)
-    if (value._id32) {
-      this.id32xor = this.id32xor ^ value._id32
-    }
-    this.changeCounter++
-    this.emit('add', value)
-    return this
-  }
-
-  clear () {
-    this.data.clear()
-    this.id32xor = 0
-    this.changeCounter = 0
-    // console.log('*** cleared, about to emit, this=%o, etag=%o', this, this.etag)
-    this.emit('clear')
-    return this
-  }
-
-  delete (value) {
-    this.data.delete(value)
-    if (value._id32) {
-      this.id32xor = this.id32xor ^ value._id32
-    }
-    this.changeCounter++
-    this.emit('delete', value)
-    return this
-  }
-
-  // purely advisory and opaque except for testing
-  get etag () {
-    const parts = []
-    // doesn't work because the client doesn't need/want to know all
-    // the changes that got skipped before sending
-    // parts.push(`count=${this.changeCounter}`)
-    parts.push(`size=${this.size}`)
-    parts.push(`id32xor=${this.id32xor}`)
-    return parts.join(';')
-  }
-
-  entries () {
-    return this.data.entries()
-  }
-
-  forEach (...args) {
-    return this.data.forEach(...args)
-  }
-
-  has (value) {
-    return this.data.has(value)
-  }
-
-  keys () {
-    return this.data.keys()
-  }
-
-  values () {
-    return this.data.values()
-  }
-
-  * [Symbol.iterator] (value) {
-    for (const i of this.data) yield i
-  }
-}
-
-module.exports = WatchableSet
-
-}).call(this,"/watchable-set.js")
-},{"debug":49,"eventemitter3":53}]},{},[44]);
+},{}]},{},[39]);

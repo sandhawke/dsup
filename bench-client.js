@@ -8,8 +8,10 @@ let count = 0
 
 async function main () {
   const client = new Client('http://127.0.0.1:8080/time-0.json')
-  client.data.on('add', item => {
-    debug('added %o, now d=%o', item, [...client.data])
+  client.dataset.on('change', ev => {
+    let {type, item} = ev
+    if (type !== 'add') return
+    debug('added %o, now d=%o', item, [...client.dataset])
     if (item.count !== count) {
       console.log('skipping', item.count - count)
       // console.log('adjusting count from %d to %d', count, item.count)

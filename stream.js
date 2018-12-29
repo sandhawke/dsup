@@ -32,25 +32,28 @@ const handleStream = ({dataset, stringify}, req, res) => {
 
   let pending = dataset.smartPatch()
   let flowing = true
-  let id
+  let idOkay
 
   const onChange = event => {
+    debug(event)
     if (!flowing) {
       pending.push(event)
       return
     }
     const out = []
-    if (id) out.push(id())
+
+    let etag = dataset.etag
+    if (idOkay && etag) out.push('id: ' + etag)
     
     let type = event.type
     let text
     if (event.type === 'clear') {
       type = 'remove-all'
     } else if (event.type === 'add') {
-      text = stringify(event.item)
+      text = stringify([event.item])
     } else if (event.type === 'delete') {
       type = 'remove'
-      text = stringify(event.key)
+      text = stringify([event.key])
     }
 
     out.push('event: ' + type)
@@ -59,8 +62,9 @@ const handleStream = ({dataset, stringify}, req, res) => {
         out.push('data: ' + line)
       }
     }
-    out.push('')
+    out.push('', '') // two blank lines to end event
     flowing = res.write(out.join('\n'))
+    if (!flowing) debug('highwatermark hit - backpressure observed')
   }
   dataset.on('change', onChange)
 
@@ -68,7 +72,7 @@ const handleStream = ({dataset, stringify}, req, res) => {
   // to false, we're supposed to get a 'drain' event as soon as it's
   // good to send again.
   const onDrain = () => {
-    // process.stdout.write('.')
+    process.stdout.write('.')
     console.log('Draining with ', pending)
     flowing = true
     while (flowing) {
@@ -91,13 +95,7 @@ const handleStream = ({dataset, stringify}, req, res) => {
 
   // we weren't really blocked, we were just using pending for this buffering
   onDrain()
-
-  // okay, now we can set etags as ids
-  id = () => {
-    let etag = dataset.etag
-    if (etag) return 'id: ' + etag + '\n'
-    return ''
-  }
+  idOkay = true
 }
 
 module.exports = handleStream
