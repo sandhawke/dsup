@@ -11,16 +11,18 @@ const run = async () => {
 
   console.log(`Try:
 curl -v ${server.siteurl}/time-1000.json
+curl ${server.siteurl}/time-10000.json.dsup
 curl ${server.siteurl}/time-1000.json.dsup
 curl ${server.siteurl}/time-100.json.dsup
 curl ${server.siteurl}/time-10.json.dsup
 curl ${server.siteurl}/time-1.json.dsup
 `)
+  timer(10000)
   timer(1000)
   timer(100)
   timer(10)
   timer(1)
-  timer(0) // start this at some URL then redirect; shut off after a while?
+  // timer(0) // start this at some URL then redirect; shut off after a while?
 
   async function timer(ms) {
     console.log('on timer %o using server %o', ms, server.siteurl)

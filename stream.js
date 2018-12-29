@@ -1,7 +1,7 @@
 const debug = require('debug')(__filename.split('/').slice(-1).join())
 let streamNumbers = 0
 
-const handleStream = ({dataset, stringify}, req, res) => {
+const handleStream = ({dataset, stringify, getVersion}, req, res) => {
   const streamNumber = ++streamNumbers
   debug('stream open %d', streamNumber)
   console.log('stream open %d', streamNumber)
@@ -84,17 +84,34 @@ const handleStream = ({dataset, stringify}, req, res) => {
   res.on('drain', onDrain)
 
   // Okay, now we need to catch up the client to our current state
-  
-  // until we are able to learn the actual clientState via etag
-  // or Last-Event-Id or something
-  const clientState = dataset.cloneEmpty()
-  pending.push({ type: 'clear' })
-  
-  const diff = clientState.diff(dataset)
-  pending.push(...diff)
 
-  // we weren't really blocked, we were just using pending for this buffering
-  onDrain()
+  let etag = (req.query['webdup-client-has-etag'] ||
+              req.param['last-event-it'])
+  console.log('client etag=%o', etag)
+  if (etag === dataset.etag) {
+    console.log('client etag is current!')
+  } else {
+    const version = getVersion(etag)
+    let diff
+    
+    if (version) {
+      // versions.mark is a SmartPatch of everything that's happened to
+      // this dataset since mark() was called, back when this etag was
+      // current
+      console.log('using version!  %o', version)
+      pending.push(...version.mark)
+      
+    } else {
+      console.log('no version match; starting fresh')
+      pending.push({ type: 'clear' })
+      const clientState = dataset.cloneEmpty()
+      const diff = clientState.diff(dataset)
+      pending.push(...diff)
+    }
+    
+    // we weren't really blocked, we were just using pending for this buffering
+    onDrain()
+  }
   idOkay = true
 }
 

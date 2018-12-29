@@ -12,6 +12,33 @@ function attach (app, path, options) {
         options.stringify ||
         JSON.stringify
 
+  const versions = new Map // etag => { lastUsed, mark, etag }
+  const keep = () => {
+    const etag = dataset.etag
+    let rec = versions.get(etag)
+    if (!rec) {
+      const mark = dataset.mark()
+      console.log('saving mark!  %o', mark)
+      rec = { mark, etag }
+    }
+    rec.lastUsed = new Date()
+    versions.set(etag, rec)
+    if (versions.size > 10) {   // tough tradeoff; versions are expensive
+      let oldest = rec
+      for (const entry of versions.values()) {
+        if (entry.lastUsed < oldest.lastUsed) oldest = entry
+      }
+      oldest.mark.close()
+      versions.delete(oldest.etag)
+    }
+  }
+  const getVersion = (etag) => {
+    const v = versions.get(etag)
+    if (!v) return undefined
+    v.lastUsed = new Date()
+    return v
+  }
+  
   // not sure this is right at all, just guessing
   const doCORS = (req, res) => {
     res.set('Access-Control-Allow-Origin', '*')
@@ -19,11 +46,13 @@ function attach (app, path, options) {
     res.set('Access-Control-Allow-Headers', 'Link')
     res.set('Access-Control-Expose-Headers', 'Link')
   }
-  
+
+  // SWITCH TO ONE STREAM URL FOR THE PROCESS, since it gets passed
+  // the webdup-source-url?
   const streamURL = path + '.webdup'
   app.get(streamURL, (req, res) => {
     doCORS(req, res)
-    handleStream({dataset, stringify}, req, res)
+    handleStream({dataset, stringify, getVersion}, req, res)
   })
   
   const sendHead = (req, res) => {
@@ -32,21 +61,27 @@ function attach (app, path, options) {
       links.set({ rel: linkrel, uri: streamURL })
     }
     res.set('Link', links)
-    if (dataset.etag) res.set('ETag', dataset.etag)
-    // send a Last-Modified date, too
     doCORS(req, res)
     res.writeHead(200)
   }
   app.head(path, (req, res) => {
+    const etag = dataset.etag
+    if (etag) res.set('ETag', etag)  // but don't bother to keep() it
     sendHead(req, res)
     res.end()
   })
   app.get(path, (req, res) => {
+    const etag = dataset.etag
+    if (etag) res.set('ETag', etag)
     sendHead(req, res)
 
     res.write(stringify([...dataset]))
     res.write('\n')
     res.end()
+    if (dataset.etag !== etag) {
+      throw Error('etag changed during serialization; that shouldnt be possible')
+    }
+    keep()
     /*
       const stringifier = new format.Stringifier()
       stringifier.pipe(res)
